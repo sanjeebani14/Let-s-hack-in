@@ -2,5 +2,12 @@ fastapi
 uvicorn
 openai
 python-dotenv
+google-generativeai
+python-dotenv
+numpy
+pytest
 numpy
 pydantic
+sentence-transformers
+transformers
+torch
