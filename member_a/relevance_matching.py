@@ -1,13 +1,5 @@
 import json
-import os
-from dotenv import load_dotenv
-from google import genai
-
 from member_a.embeddings import generate_embedding, cosine_similarity
-
-load_dotenv()
-
-client = genai.Client(api_key=os.getenv("GOOGLE_API_KEY"))
 
 
 def calculate_fit_score(candidate_profile: dict, opportunity: dict) -> float:
