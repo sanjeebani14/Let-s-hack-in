@@ -1,0 +1,259 @@
+{
+  "skillGraph": {
+    "nodes": [
+      {
+        "id": "python",
+        "label": "Python",
+        "proficiency": "expert",
+        "confidence": 94.51624999999999,
+        "projectCount": 2
+      },
+      {
+        "id": "kubernetes",
+        "label": "Kubernetes",
+        "proficiency": "expert",
+        "confidence": 97.99999999999999,
+        "projectCount": 1
+      },
+      {
+        "id": "postgresql",
+        "label": "PostgreSQL",
+        "proficiency": "expert",
+        "confidence": 97.99999999999999,
+        "projectCount": 1
+      },
+      {
+        "id": "redis",
+        "label": "Redis",
+        "proficiency": "expert",
+        "confidence": 91.0325,
+        "projectCount": 1
+      },
+      {
+        "id": "machine-learning",
+        "label": "Machine Learning",
+        "proficiency": "expert",
+        "confidence": 91.0325,
+        "projectCount": 1
+      },
+      {
+        "id": "react",
+        "label": "React",
+        "proficiency": "expert",
+        "confidence": 89.20749999999998,
+        "projectCount": 1
+      },
+      {
+        "id": "rest-api",
+        "label": "REST API",
+        "proficiency": "expert",
+        "confidence": 89.20749999999998,
+        "projectCount": 1
+      },
+      {
+        "id": "websocket",
+        "label": "WebSocket",
+        "proficiency": "expert",
+        "confidence": 89.20749999999998,
+        "projectCount": 1
+      }
+    ],
+    "edges": [
+      {
+        "source": "python",
+        "target": "project_0",
+        "confidence": 97.99999999999999,
+        "evidence": "Led Python work: expert proficiency",
+        "ownership": "led",
+        "metrics": 2
+      },
+      {
+        "source": "python",
+        "target": "project_1",
+        "confidence": 91.0325,
+        "evidence": "Led Python work: expert proficiency",
+        "ownership": "led",
+        "metrics": 2
+      },
+      {
+        "source": "kubernetes",
+        "target": "project_0",
+        "confidence": 97.99999999999999,
+        "evidence": "Led Kubernetes work: expert proficiency",
+        "ownership": "led",
+        "metrics": 2
+      },
+      {
+        "source": "postgresql",
+        "target": "project_0",
+        "confidence": 97.99999999999999,
+        "evidence": "Led PostgreSQL work: expert proficiency",
+        "ownership": "led",
+        "metrics": 2
+      },
+      {
+        "source": "redis",
+        "target": "project_0",
+        "confidence": 91.0325,
+        "evidence": "Led Redis work: expert proficiency",
+        "ownership": "led",
+        "metrics": 2
+      },
+      {
+        "source": "machine-learning",
+        "target": "project_0",
+        "confidence": 91.0325,
+        "evidence": "Led Machine Learning work: expert proficiency",
+        "ownership": "led",
+        "metrics": 2
+      },
+      {
+        "source": "react",
+        "target": "project_0",
+        "confidence": 89.20749999999998,
+        "evidence": "Led React work: expert proficiency",
+        "ownership": "led",
+        "metrics": 2
+      },
+      {
+        "source": "rest-api",
+        "target": "project_0",
+        "confidence": 89.20749999999998,
+        "evidence": "Led REST API work: expert proficiency",
+        "ownership": "led",
+        "metrics": 2
+      },
+      {
+        "source": "websocket",
+        "target": "project_0",
+        "confidence": 89.20749999999998,
+        "evidence": "Led WebSocket work: expert proficiency",
+        "ownership": "led",
+        "metrics": 2
+      }
+    ],
+    "stats": {
+      "totalSkills": 8,
+      "totalEdges": 9,
+      "averageConfidence": 92.52546874999999,
+      "topSkills": [
+        {
+          "name": "Kubernetes",
+          "confidence": 97.99999999999999
+        },
+        {
+          "name": "PostgreSQL",
+          "confidence": 97.99999999999999
+        },
+        {
+          "name": "Python",
+          "confidence": 94.51624999999999
+        }
+      ]
+    }
+  },
+  "opportunityProofCards": [
+    {
+      "opportunity": {
+        "title": "Senior Backend Engineer - Real-time Systems",
+        "requiredSkills": [
+          "- Python (5+ years)",
+          "- Kubernetes and containerization"
+        ]
+      },
+      "matched_skills": [
+        {
+          "name": "Kubernetes",
+          "confidence": 97.99999999999999,
+          "proficiency": "expert",
+          "evidence": "Led Kubernetes work: expert proficiency",
+          "projectCount": 1
+        },
+        {
+          "name": "Python",
+          "confidence": 94.51624999999999,
+          "proficiency": "expert",
+          "evidence": "Led Python work: expert proficiency",
+          "projectCount": 2
+        },
+        {
+          "name": "PostgreSQL",
+          "confidence": 97.99999999999999,
+          "proficiency": "expert",
+          "evidence": "Led PostgreSQL work: expert proficiency",
+          "projectCount": 1
+        },
+        {
+          "name": "Redis",
+          "confidence": 91.0325,
+          "proficiency": "expert",
+          "evidence": "Led Redis work: expert proficiency",
+          "projectCount": 1
+        },
+        {
+          "name": "Machine Learning",
+          "confidence": 91.0325,
+          "proficiency": "expert",
+          "evidence": "Led Machine Learning work: expert proficiency",
+          "projectCount": 1
+        }
+      ],
+      "match": {
+        "relevanceScore": 94.51624999999999,
+        "summary": "Strong match: Kubernetes, Python, PostgreSQL (95/100 avg confidence)"
+      }
+    },
+    {
+      "opportunity": {
+        "title": "Full Stack Engineer - React & Python",
+        "requiredSkills": [
+          "React",
+          "JavaScript",
+          "Python",
+          "REST APIs"
+        ]
+      },
+      "matched_skills": [
+        {
+          "name": "Python",
+          "confidence": 94.51624999999999,
+          "proficiency": "expert",
+          "evidence": "Led Python work: expert proficiency",
+          "projectCount": 2
+        },
+        {
+          "name": "React",
+          "confidence": 89.20749999999998,
+          "proficiency": "expert",
+          "evidence": "Led React work: expert proficiency",
+          "projectCount": 1
+        },
+        {
+          "name": "REST API",
+          "confidence": 89.20749999999998,
+          "proficiency": "expert",
+          "evidence": "Led REST API work: expert proficiency",
+          "projectCount": 1
+        },
+        {
+          "name": "Kubernetes",
+          "confidence": 97.99999999999999,
+          "proficiency": "expert",
+          "evidence": "Led Kubernetes work: expert proficiency",
+          "projectCount": 1
+        },
+        {
+          "name": "PostgreSQL",
+          "confidence": 97.99999999999999,
+          "proficiency": "expert",
+          "evidence": "Led PostgreSQL work: expert proficiency",
+          "projectCount": 1
+        }
+      ],
+      "match": {
+        "relevanceScore": 93.78625,
+        "summary": "Strong match: Python, React, REST API (94/100 avg confidence)"
+      }
+    }
+  ]
+}

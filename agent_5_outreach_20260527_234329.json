@@ -1,0 +1,112 @@
+{
+  "opportunity_title": "Senior ML Infrastructure Engineer",
+  "candidate_name": "Jordan Lee",
+  "generated_timestamp": "2026-05-27T18:13:29.130021Z",
+  "inroad_score": 76.5,
+  "action_instructions": {
+    "opportunity_title": "Senior ML Infrastructure Engineer",
+    "instructions": [
+      {
+        "instruction": "Request an introduction from Maya Patel (worked together at DataCorp (2022-2024)) to the hiring team. Prepare a 1-line context: 'Interested in their Senior ML Infrastructure Engineer work.'",
+        "category": "connector_request",
+        "reasoning": "Warm introductions have 5-10x higher response rate than cold outreach. Your connection already knows their value.",
+        "time_frame": "this_week"
+      },
+      {
+        "instruction": "Prepare a 2-line anecdote about PyCon 2025 ML Challenge: What problem did you tackle? What did you learn about their tech stack there?",
+        "category": "shared_context_reference",
+        "reasoning": "Shared experience creates instant credibility and gives them a reason to engage (not just another resume).",
+        "time_frame": "before_outreach"
+      }
+    ],
+    "priority_sequence": [
+      1,
+      2
+    ],
+    "estimated_prep_time_minutes": 15
+  },
+  "linkedin_outreach": {
+    "message_type": "shared_context",
+    "subject_line": "PyCon 2025 ML Challenge + Senior ML Infrastructure Engineer intersection",
+    "message_body": "Hi there, We both participated in PyCon 2025 ML Challenge — I was really impressed with Senior ML Infrastructure Engineer's approach to [domain]. Since then, I've been diving deeper into building scalable distributed ML infrastructure for foundation model training. I'd love to learn more about your perspective on this. Open to a quick conversation? Jordan Lee",
+    "tone_notes": "Community-first, authentic. Shared spaces reduce cold-contact friction.",
+    "character_count": 361
+  },
+  "email_outreach": {
+    "opportunity_title": "Senior ML Infrastructure Engineer",
+    "recipient_name": "Dr. Sarah Chen",
+    "primary_email": {
+      "variant_name": "A",
+      "subject_line": "From [hackathon] — Your Senior ML Infrastructure Engineer…",
+      "body": "I was impressed by Senior ML Infrastructure Engineer's work when we both participated in PyCon 2025 ML Challenge. What stood out was the technical depth around building scalable distributed ML infrastructure for foundation model training. My background in Distributed ML Systems (Architected distributed training framework handling 128 GPU clusters with 45% latency reduction vs industry standard) gives me solid perspective here. I think there's real alignment between how I approach these problems and what you're building. Would you have 15 minutes for a quick call next week? I'd love to discuss your approach to Senior ML Infrastructure Engineer. Best, Jordan Lee",
+      "cta_type": "meeting_request",
+      "estimated_read_time_seconds": 45
+    },
+    "variant_b": {
+      "variant_name": "B",
+      "subject_line": "Thinking about your Senior ML Infrastructure Engineer work",
+      "body": "Hi Dr. Sarah Chen, I've been diving into building scalable distributed ML infrastructure for foundation model training lately, and your team's approach resonates with me. My background in Distributed ML Systems (Architected distributed training framework handling 128 GPU clusters with 45% latency reduction vs industry standard) gives me solid perspective here. Quick thought: [specific insight about their work]. Happy to elaborate if interesting. I see a potential collaboration angle here — would you be open to exploring it? Best, Jordan Lee",
+      "cta_type": "collaboration_inquiry",
+      "estimated_read_time_seconds": 35
+    },
+    "sending_notes": "Good fit. Send Tuesday-Thursday 9-11am PT. Follow up after 1 week. A/B test both variants before next cycle.",
+    "context_bridges_included": [
+      "shared hackathon"
+    ]
+  },
+  "proof_attachment": {
+    "opportunity_title": "Senior ML Infrastructure Engineer",
+    "primary_proof_attachment": {
+      "skill_name": "Distributed ML Systems",
+      "confidence_score": 91.0,
+      "evidence_snippet": "Architected distributed training framework handling 128 GPU clusters with 45% latency reduction vs industry standard",
+      "evidence_source": "portfolio",
+      "attachment_type": "inline_narrative",
+      "attachment_text": "My Distributed ML Systems experience: Architected distributed training framework handling 128 GPU clusters with 45% latency reduction vs industry standard"
+    },
+    "secondary_proof_attachments": [
+      {
+        "skill_name": "PyTorch & CUDA Optimization",
+        "confidence_score": 87.0,
+        "evidence_snippet": "Led optimization of PyTorch kernels, achieving 3.2x speedup on transformer inference across A100 GPU",
+        "evidence_source": "portfolio",
+        "attachment_type": "supporting_document",
+        "attachment_text": "Led optimization of PyTorch kernels, achieving 3.2x speedup on transformer inference across A100 GPUs"
+      },
+      {
+        "skill_name": "Kubernetes & Infrastructure",
+        "confidence_score": 84.0,
+        "evidence_snippet": "Designed Kubernetes ML cluster management system scaling to 500+ model deployments with 99.98% uptim",
+        "evidence_source": "portfolio",
+        "attachment_type": "supporting_document",
+        "attachment_text": "Designed Kubernetes ML cluster management system scaling to 500+ model deployments with 99.98% uptime"
+      }
+    ],
+    "linkedin_dm_attachment_snippet": "I've been working on Distributed ML Systems — specifically Architected distributed training framework handling 128 GP…",
+    "email_body_attachment_snippet": "My background in Distributed ML Systems includes Architected distributed training framework handling 128 GPU clusters with 45% latency reduction vs industry standard. This aligns closely with your focus.",
+    "signature_proof_line": "Distributed ML Systems: Architected distributed training framework handling 128 GPU clusters with 45% la",
+    "attachment_integrity_check": true
+  },
+  "enriched_linkedin_message": "I've been working on Distributed ML Systems — specifically Architected distributed training framework handling 128 GP…\n\nHi there, We both participated in PyCon 2025 ML Challenge — I was really impressed with Senior ML Infrastructure Engineer's approach to [domain]. Since then, I've been diving deeper into building scalable distributed ML infrastructure for foundation model training. I'd love to learn more about your perspective on this. Open to a quick conversation? Jordan Lee",
+  "enriched_email_primary": "I was impressed by Senior ML Infrastructure Engineer's work when we both participated in PyCon 2025 ML Challenge. What stood out was the technical depth around building scalable distributed ML infrastructure for foundation model training. My background in Distributed ML Systems (Architected distributed training framework handling 128 GPU clusters with 45% latency reduction vs industry standard) gives me solid perspective here. I think there's real alignment between how I approach these problems and what you're building. Would you have 15 minutes for a quick call next week? I'd love to discuss your approach to Senior ML Infrastructure Engineer. Best, Jordan Lee",
+  "safety_checks_passed": true,
+  "validation_notes": [
+    "✓ Action instructions generated",
+    "✓ LinkedIn DM generated",
+    "✓ Cold email package generated",
+    "✓ Proof attachment created",
+    "[action_instructions_valid]: True",
+    "[linkedin_dm_valid]: True",
+    "[email_package_valid]: True",
+    "[proof_attachment_valid]: True",
+    "[all_null_safe]: True",
+    "[message_text_length_ok]: True",
+    "[cta_present]: True"
+  ],
+  "recommended_order": [
+    "action_instructions",
+    "linkedin",
+    "email_followup"
+  ],
+  "estimated_total_time_minutes": 30
+}
