@@ -31,12 +31,12 @@ from agent_4 import (
 from agent_4 import parse_project_narrative
 
 project_description = """
-I led the development of a real-time event streaming platform using Python 
-and Apache Kafka. Architected distributed system handling 2M events/second 
-with <100ms latency. Managed 4-person engineering team. 
+I led the development of a real-time event streaming platform using Python
+and Apache Kafka. Architected distributed system handling 2M events/second
+with <100ms latency. Managed 4-person engineering team.
 
-Overcame consensus challenges with custom Kafka offset management. 
-Reduced data loss incidents to zero and achieved 99.99% consistency. 
+Overcame consensus challenges with custom Kafka offset management.
+Reduced data loss incidents to zero and achieved 99.99% consistency.
 Used Kubernetes for orchestration, migrated from RabbitMQ.
 """
 
@@ -259,7 +259,7 @@ projects = [
         "text": "I led development of a real-time event platform using Python..."
     },
     {
-        "id": "project_2", 
+        "id": "project_2",
         "text": "Built a React dashboard for monitoring distributed systems..."
     }
 ]
@@ -278,13 +278,13 @@ for project_id, narrative, full_text in parsed:
     ownership = detect_ownership_level(full_text)
     clarity = score_outcome_clarity(narrative.outcome)
     complexity = evaluate_complexity(full_text)
-    
+
     # Calculate confidence for each skill
     skills = extract_skills_from_text(full_text)
     for skill in skills:
         if skill not in confidence_by_skill:
             confidence_by_skill[skill] = []
-        
+
         conf = calculate_confidence_score(
             skill, ownership, clarity, complexity, project_count=1
         )
@@ -334,6 +334,7 @@ print(f"  - Opportunities analyzed: {len(results['proofCards'])}")
 ## Common Patterns
 
 ### Pattern 1: Single Project Analysis
+
 ```python
 # Quick analysis of one project
 project_text = "I built a Python microservice that..."
@@ -347,6 +348,7 @@ print(f"{ownership.ownership_level} - {clarity.clarity_score:.1f} clarity - {com
 ```
 
 ### Pattern 2: Multiple Skills from One Project
+
 ```python
 # Get confidence scores for all skills in a project
 skills = extract_skills_from_text(project_text)
@@ -364,6 +366,7 @@ for skill_name, score in top_3:
 ```
 
 ### Pattern 3: Batch Processing Portfolio
+
 ```python
 # Process entire portfolio and generate comprehensive profile
 portfolio = {
@@ -379,7 +382,7 @@ for project_id, description in portfolio.items():
     ownership = detect_ownership_level(description)
     clarity = score_outcome_clarity(narrative.outcome)
     complexity = evaluate_complexity(description)
-    
+
     for skill in extract_skills_from_text(description):
         if skill not in all_scores:
             all_scores[skill] = []
@@ -396,21 +399,25 @@ graph = build_skill_graph(all_scores)
 ## Scoring Reference
 
 ### Ownership Levels
+
 - **"led"**: Strong leadership verbs (architect, design, lead, etc.)
 - **"contributed"**: Active participation (implement, develop, handle)
 - **"assisted"**: Supporting roles (helped, learned, attended)
 
 ### Outcome Clarity Scale
+
 - **0.95-1.0**: 3+ concrete metrics identified
 - **0.75-0.94**: Specific outcomes with metrics
 - **0.55-0.74**: Mix of vague and measurable
 - **Below 0.55**: Mostly unquantified claims
 
 ### Complexity Levels
+
 - **"novel"**: Multiple complexity indicators (score ≥ 0.65)
 - **"routine"**: Standard practices (score < 0.65)
 
 ### Proficiency Levels
+
 - **"expert"**: 85-100 confidence
 - **"advanced"**: 70-84 confidence
 - **"intermediate"**: 55-69 confidence
@@ -421,6 +428,7 @@ graph = build_skill_graph(all_scores)
 ## Output Field Reference
 
 ### SkillConfidenceScore Fields
+
 - `skill_name`: Name of the skill
 - `confidence_score`: 0-100 trust metric
 - `proficiency_level`: "novice"|"intermediate"|"advanced"|"expert"
@@ -429,6 +437,7 @@ graph = build_skill_graph(all_scores)
 - `summary`: Human-readable summary
 
 ### ProofCard Fields
+
 - `opportunity_title`: Job title
 - `required_skills`: Skills from opportunity posting
 - `matched_skills`: Top 3-5 most relevant candidate skills
@@ -436,6 +445,7 @@ graph = build_skill_graph(all_scores)
 - `summary`: "Strong match: [skills] ([score]/100 avg)"
 
 ### SkillGraph Fields
+
 - `nodes`: List of SkillNode objects (skill metadata)
 - `edges`: List of SkillEdge objects (skill-project links)
 - `stats`: Graph statistics (total skills, average confidence, top skills)

@@ -5,6 +5,7 @@
 Agent 4 is a comprehensive skill assessment system that parses portfolio descriptions, calculates algorithmic trust scores for claimed technical competencies, and builds data structures suitable for frontend visualization.
 
 The agent analyzes project narratives through multiple lenses:
+
 - **Ownership depth**: Distinguishes leadership vs. contribution vs. assistance
 - **Outcome clarity**: Separates vague claims from measurable proofs
 - **Problem complexity**: Identifies novel challenges vs. routine work
@@ -15,7 +16,9 @@ The agent analyzes project narratives through multiple lenses:
 ### Core Modules
 
 #### 1. **parser.py** — Project Narrative Parser
+
 Breaks down unstructured project descriptions into structured components:
+
 - `what_was_built`: Core product/feature description
 - `candidate_role`: Specific role(s) the candidate took
 - `outcome`: Results and impact statements
@@ -23,9 +26,11 @@ Breaks down unstructured project descriptions into structured components:
 - `challenges_faced`: Problems encountered and resolved (list)
 
 **Key Functions:**
+
 - `parse_project_narrative(text)` → `ProjectNarrative`
 
 **Example:**
+
 ```python
 from agent_4 import parse_project_narrative
 
@@ -38,22 +43,27 @@ print(narrative.candidate_role)   # Extracted role information
 ---
 
 #### 2. **ownership.py** — Ownership Depth Detector
+
 Analyzes linguistic patterns to classify candidate's level of ownership/contribution.
 
 **Classification Levels:**
+
 - `"led"` (0.75-1.0 action verb score): Strong leadership indicators
 - `"contributed"` (0.50-0.75): Active contribution indicators
 - `"assisted"` (below 0.50): Supporting/learning roles
 
 **Detection Method:**
+
 - Scores action verbs: strong verbs (led, architected, designed) vs. weak (used, attended, learned)
 - Flags `is_vague` if language is passive or lacks specific ownership indicators
 - Returns `action_verb_score`, `confidence`, and key `evidence`
 
 **Key Functions:**
+
 - `detect_ownership_level(narrative_text, role_text)` → `OwnershipAnalysis`
 
 **Example:**
+
 ```python
 ownership = detect_ownership_level(project_description)
 print(f"Level: {ownership.ownership_level}")           # "led"
@@ -64,9 +74,11 @@ print(f"Is Vague: {ownership.is_vague}")               # False
 ---
 
 #### 3. **outcome_scorer.py** — Outcome Clarity Scorer
+
 Evaluates outcome statements for concrete metrics vs. vague claims.
 
 **Metrics Detected:**
+
 - Percentages: "40%", "improved by 50%"
 - Counts: "10k users", "500 downloads"
 - Time: "reduced latency to 100ms"
@@ -74,15 +86,18 @@ Evaluates outcome statements for concrete metrics vs. vague claims.
 - Financial: "$2M revenue"
 
 **Clarity Score (0-1):**
+
 - 0.95+: 3+ metrics identified
 - 0.75-0.95: Specific outcomes with some metrics
 - 0.55-0.75: Mix of vague and measurable
 - Below 0.55: Mostly unquantified claims
 
 **Key Functions:**
+
 - `score_outcome_clarity(outcome_text)` → `OutcomeClarityScore`
 
 **Example:**
+
 ```python
 clarity = score_outcome_clarity("Reduced latency by 40%, improved throughput 3x")
 print(f"Clarity Score: {clarity.clarity_score}")  # 0.95
@@ -93,9 +108,11 @@ print(f"Measures: {len(clarity.measures_found)}")  # 2 metrics
 ---
 
 #### 4. **complexity.py** — Problem Complexity Evaluator
+
 Assesses whether the project involved routine work or novel challenges.
 
 **Complexity Indicators:**
+
 - Constraints (distributed systems, compliance, legacy code)
 - Failures (debugging critical issues, handling edge cases)
 - Trade-offs (architectural decisions, technology choices, refactoring)
@@ -103,13 +120,16 @@ Assesses whether the project involved routine work or novel challenges.
 - Novel approaches (innovative algorithms, new patterns)
 
 **Classification:**
+
 - `"novel"` (score >= 0.65): Multiple complexity indicators
 - `"routine"` (score < 0.65): Standard engineering practices
 
 **Key Functions:**
+
 - `evaluate_complexity(narrative_text, challenges_list, outcome_text)` → `ComplexityRating`
 
 **Example:**
+
 ```python
 complexity = evaluate_complexity(project_description)
 print(f"Level: {complexity.complexity_level}")        # "novel"
@@ -120,9 +140,11 @@ print(f"Indicators: {complexity.indicators_found}")   # [constraint, failure, no
 ---
 
 #### 5. **confidence.py** — Skill Confidence Score Generator
+
 Aggregates ownership, outcome clarity, and complexity into skill confidence scores (0-100).
 
 **Formula:**
+
 ```
 confidence = (
     ownership_score × 0.35 +      # How much did candidate lead?
@@ -133,16 +155,19 @@ confidence = (
 ```
 
 **Proficiency Levels:**
+
 - 85-100: Expert
 - 70-84: Advanced
 - 55-69: Intermediate
 - Below 55: Novice
 
 **Key Functions:**
+
 - `calculate_confidence_score(skill_name, ownership, clarity, complexity, ...)` → `SkillConfidenceScore`
 - `extract_skills_from_text(narrative)` → `List[str]`
 
 **Example:**
+
 ```python
 confidence = calculate_confidence_score(
     "Python",
@@ -159,9 +184,11 @@ print(f"Level: {confidence.proficiency_level}")     # "expert"
 ---
 
 #### 6. **graph_builder.py** — Skill Graph Builder
+
 Constructs a graph structure where nodes are skills and edges are projects providing evidence.
 
 **Data Structures:**
+
 - `SkillNode`: Represents a technical skill with:
   - `id`: Normalized skill identifier
   - `name`: Display name
@@ -178,10 +205,12 @@ Constructs a graph structure where nodes are skills and edges are projects provi
   - `outcome_metrics_count`: Number of quantified outcomes
 
 **Key Functions:**
+
 - `build_skill_graph(confidence_scores_by_skill)` → `SkillGraph`
 - `graph_to_dict(graph)` → `Dict` (JSON-ready format)
 
 **Example:**
+
 ```python
 # After calculating confidence scores for multiple skills/projects
 graph = build_skill_graph({
@@ -202,15 +231,18 @@ graph_dict = graph_to_dict(graph)
 ---
 
 #### 7. **proof_card.py** — Proof Card Generator
+
 Filters the skill graph to generate targeted proof cards for specific job opportunities.
 
 **Workflow:**
+
 1. Extract required skills from opportunity description
 2. Calculate relevance of candidate's skills to requirements
 3. Select top 3-5 most relevant skills
 4. Include best project evidence for each skill
 
 **Output (ProofCard):**
+
 - `opportunity_title`: Job title
 - `required_skills`: Skills listed in posting
 - `matched_skills`: Top matching skills with evidence
@@ -218,10 +250,12 @@ Filters the skill graph to generate targeted proof cards for specific job opport
 - `summary`: One-line summary
 
 **Key Functions:**
+
 - `generate_proof_card(skill_graph, opportunity_description, title, max_skills)` → `ProofCard`
 - `proof_card_to_dict(proof_card)` → `Dict` (JSON-ready)
 
 **Example:**
+
 ```python
 opportunity = """
 Senior Backend Engineer role:
@@ -282,6 +316,7 @@ proof_card = generate_proof_card(full_graph, opportunity_description)
 ## Output Formats
 
 ### Skill Graph (JSON)
+
 ```json
 {
   "nodes": [
@@ -313,6 +348,7 @@ proof_card = generate_proof_card(full_graph, opportunity_description)
 ```
 
 ### Proof Card (JSON)
+
 ```json
 {
   "opportunity": {
@@ -340,6 +376,7 @@ proof_card = generate_proof_card(full_graph, opportunity_description)
 ## Pydantic Schemas
 
 All data structures use Pydantic v2 for:
+
 - Type validation
 - JSON serialization
 - Documentation via field descriptions
@@ -366,11 +403,13 @@ agent_4/
 ## Testing
 
 Run the comprehensive workflow:
+
 ```bash
 python example_agent_4_complete_workflow.py
 ```
 
 Quick test suite:
+
 ```bash
 python test_agent_4.py
 ```
@@ -391,6 +430,7 @@ python test_agent_4.py
 ## Scoring Philosophy
 
 Agent 4 doesn't assume competency claims are fraudulent. Instead, it:
+
 - Rewards **demonstrated leadership** over participation
 - Requires **measurable outcomes** to confirm impact
 - Recognizes **novel challenges** as indicators of depth

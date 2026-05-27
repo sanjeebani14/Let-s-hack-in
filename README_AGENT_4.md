@@ -51,11 +51,13 @@ Documentation & Examples:
 ## 🚀 Quick Start
 
 ### Installation (No external dependencies beyond Pydantic)
+
 ```bash
 pip install pydantic  # Already in requirements.txt
 ```
 
 ### Minimal Example
+
 ```python
 from agent_4 import *
 
@@ -68,7 +70,7 @@ clarity = score_outcome_clarity(narrative.outcome)
 
 # Calculate skill confidence
 confidence = calculate_confidence_score(
-    "Python", ownership, clarity, 
+    "Python", ownership, clarity,
     evaluate_complexity(narrative.raw_text)
 )
 
@@ -76,6 +78,7 @@ print(f"Python: {confidence.confidence_score:.0f}/100 ({confidence.proficiency_l
 ```
 
 ### Complete Workflow Example
+
 See `example_agent_4_complete_workflow.py` for full 7-phase demonstration with real data.
 
 ---
@@ -83,41 +86,51 @@ See `example_agent_4_complete_workflow.py` for full 7-phase demonstration with r
 ## 📊 Key Components
 
 ### 1. Parser (`agent_4/parser.py`)
+
 **Purpose**: Break unstructured text into components  
 **Input**: Project description (string)  
 **Output**: `ProjectNarrative` (Pydantic model)
+
 ```python
 narrative = parse_project_narrative(project_text)
 # Returns: what_was_built, candidate_role, outcome, decisions_made, challenges_faced
 ```
 
 ### 2. Ownership Detector (`agent_4/ownership.py`)
+
 **Purpose**: Classify contribution level  
 **Output**: `OwnershipAnalysis` with level ("led"/"contributed"/"assisted")
+
 ```python
 ownership = detect_ownership_level(narrative.raw_text)
 # Returns: ownership_level, action_verb_score, is_vague, confidence
 ```
 
 ### 3. Outcome Scorer (`agent_4/outcome_scorer.py`)
+
 **Purpose**: Find concrete metrics vs. vague claims  
 **Output**: `OutcomeClarityScore` with metrics list
+
 ```python
 clarity = score_outcome_clarity(narrative.outcome)
 # Returns: clarity_score (0-1), is_specific, measures_found, vague_claims
 ```
 
 ### 4. Complexity Evaluator (`agent_4/complexity.py`)
+
 **Purpose**: Assess routine vs. novel problems  
 **Output**: `ComplexityRating` ("routine"/"novel")
+
 ```python
 complexity = evaluate_complexity(narrative.raw_text)
 # Returns: complexity_level, complexity_score, indicators_found
 ```
 
 ### 5. Confidence Calculator (`agent_4/confidence.py`)
+
 **Purpose**: Aggregate all signals into 0-100 score  
 **Formula**: 35% ownership + 30% clarity + 20% complexity + 15% frequency
+
 ```python
 confidence = calculate_confidence_score(
     "Python", ownership, clarity, complexity, project_count=2
@@ -126,8 +139,10 @@ confidence = calculate_confidence_score(
 ```
 
 ### 6. Graph Builder (`agent_4/graph_builder.py`)
+
 **Purpose**: Build visualization-ready skill graph  
 **Output**: `SkillGraph` with nodes (skills) + edges (projects)
+
 ```python
 graph = build_skill_graph(confidence_scores_by_skill)
 graph_dict = graph_to_dict(graph)  # JSON-ready format
@@ -135,8 +150,10 @@ graph_dict = graph_to_dict(graph)  # JSON-ready format
 ```
 
 ### 7. Proof Card Generator (`agent_4/proof_card.py`)
+
 **Purpose**: Filter to top relevant skills for opportunities  
 **Output**: `ProofCard` with matched skills + evidence
+
 ```python
 proof_card = generate_proof_card(graph, opportunity_description, max_skills=5)
 card_dict = proof_card_to_dict(proof_card)  # JSON-ready format
@@ -148,16 +165,19 @@ card_dict = proof_card_to_dict(proof_card)  # JSON-ready format
 ## 🔧 Technical Specifications
 
 ### Language & Dependencies
+
 - **Python**: 3.11+
 - **Pydantic**: 2.13.4+ (Type validation, JSON serialization)
 - **Standard Library**: `re` (regex), `typing`, no other external deps
 
 ### Type Safety
+
 - Full type hints on all functions
 - Pydantic schemas for all data structures
 - Validation on field constraints (e.g., ge=0, le=100)
 
 ### Performance
+
 - Parse time: ~10ms per project
 - Analysis time: ~50ms per project (all components)
 - Graph building: ~5ms per 100 edges
@@ -168,6 +188,7 @@ card_dict = proof_card_to_dict(proof_card)  # JSON-ready format
 ## 📈 Scoring Algorithms
 
 ### Ownership Score
+
 ```
 Strong verbs (led, architected, designed): 0.85-0.95
 Medium verbs (developed, implemented, handled): 0.55-0.80
@@ -177,6 +198,7 @@ Adjusted for classification: led × 1.15, contributed × 1.0, assisted × 0.75
 ```
 
 ### Outcome Clarity Score
+
 ```
 3+ metrics found: 0.95
 2 metrics found: 0.85
@@ -186,6 +208,7 @@ Vague claims penalty: × 0.70-0.92
 ```
 
 ### Complexity Score
+
 ```
 Multiple indicators (3+): +0.15 bonus
 Scale/architectural mentions: 0.40-0.85
@@ -195,6 +218,7 @@ Trade-off/architecture discussions: 0.45-0.90
 ```
 
 ### Final Confidence Score
+
 ```
 confidence = (
     ownership_score × 0.35 +
@@ -217,6 +241,7 @@ Proficiency mapping:
 All data structures are type-safe Pydantic models:
 
 **Main Outputs:**
+
 - `ProjectNarrative` — Parsed project components
 - `OwnershipAnalysis` — Ownership classification
 - `OutcomeClarityScore` — Outcome metrics
@@ -226,6 +251,7 @@ All data structures are type-safe Pydantic models:
 - `ProofCard` — Opportunity proof snapshot
 
 **Supporting:**
+
 - `SkillNode` — Skill with metadata
 - `SkillEdge` — Skill-project link
 - `OutcomeMeasure` — Individual metric
@@ -238,6 +264,7 @@ All data structures are type-safe Pydantic models:
 ## ✅ Validation & Testing
 
 ### Unit Tests Passed ✓
+
 - All 10 functions import correctly
 - All 7 Pydantic schemas validate
 - Parsing works on sample narratives
@@ -249,6 +276,7 @@ All data structures are type-safe Pydantic models:
 - Proof card generation functional
 
 ### Integration Tests Passed ✓
+
 - Full 7-phase workflow
 - 3 projects analyzed
 - 8 skills identified
@@ -256,6 +284,7 @@ All data structures are type-safe Pydantic models:
 - JSON export successful
 
 ### Production Validation ✓
+
 - End-to-end pipeline verified
 - JSON serialization confirmed
 - Output files generated
@@ -275,7 +304,7 @@ agent_4_output.json          # Generated skill graph + proof cards
                              # - edges: project evidence
                              # - stats: summary metrics
                              # - proofCards: filtered for opportunities
-                             
+
 Size: ~7KB | Format: JSON | Ready for frontend visualization
 ```
 
@@ -284,6 +313,7 @@ Size: ~7KB | Format: JSON | Ready for frontend visualization
 ## 🎓 Usage Patterns
 
 ### Pattern 1: Single Project Quick Analysis
+
 ```python
 narrative = parse_project_narrative(text)
 ownership = detect_ownership_level(text)
@@ -291,6 +321,7 @@ score = calculate_confidence_score("Python", ownership, ...)
 ```
 
 ### Pattern 2: Portfolio-wide Skill Profile
+
 ```python
 for project in portfolio:
     narrative = parse_project_narrative(project)
@@ -301,12 +332,14 @@ graph = build_skill_graph(all_scores)
 ```
 
 ### Pattern 3: Opportunity Matching
+
 ```python
 proof_card = generate_proof_card(graph, job_description)
 # Top 3-5 most relevant skills with evidence
 ```
 
 ### Pattern 4: Portfolio Analysis + Export
+
 ```python
 graph = build_skill_graph(scores)
 proof_cards = [generate_proof_card(graph, opp) for opp in opportunities]
@@ -349,13 +382,13 @@ Agent 4 is ready for:
 
 ## 📚 Documentation Files
 
-| File | Purpose |
-|------|---------|
-| **AGENT_4_DOCUMENTATION.md** | Comprehensive 30+ page reference with all details |
-| **AGENT_4_QUICK_REFERENCE.md** | Quick examples, common patterns, field reference |
-| **AGENT_4_IMPLEMENTATION_SUMMARY.md** | Features checklist, achievements, technical stack |
-| **test_agent_4.py** | Unit test suite (quick validation) |
-| **example_agent_4_complete_workflow.py** | Full 7-phase integration example |
+| File                                     | Purpose                                           |
+| ---------------------------------------- | ------------------------------------------------- |
+| **AGENT_4_DOCUMENTATION.md**             | Comprehensive 30+ page reference with all details |
+| **AGENT_4_QUICK_REFERENCE.md**           | Quick examples, common patterns, field reference  |
+| **AGENT_4_IMPLEMENTATION_SUMMARY.md**    | Features checklist, achievements, technical stack |
+| **test_agent_4.py**                      | Unit test suite (quick validation)                |
+| **example_agent_4_complete_workflow.py** | Full 7-phase integration example                  |
 
 ---
 
@@ -367,7 +400,7 @@ Agent 4 is ready for:
 ✅ **Zero External APIs**: Fully local, deterministic execution  
 ✅ **Frontend Ready**: JSON output formats for visualization  
 ✅ **Comprehensive Testing**: Unit tests, integration tests, validation passed  
-✅ **Well Documented**: 60+ page documentation + quick reference + examples  
+✅ **Well Documented**: 60+ page documentation + quick reference + examples
 
 ---
 
