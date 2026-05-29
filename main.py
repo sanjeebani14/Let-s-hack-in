@@ -13,8 +13,10 @@ from datetime import datetime
 
 from member_a.profile_extractor import extract_candidate_profile
 from member_a.relevance_matching import rank_opportunity_matches
-from member_b.dataset import get_mock_opportunities
+from member_b.discovery_service import discover_opportunities as discover_live_opportunities
 from member_b.scorer import rank_opportunities
+from inroad_skill_pipeline import build_skill_graph_from_portfolio, build_proof_for_opportunity
+from agent_5.assembler import assemble_outreach_package
 from agent_3.context_detector import detect_shared_contexts
 from agent_3.engagement import check_engagement_signals
 from agent_3.connector import find_connector_persons
@@ -27,6 +29,38 @@ from agent_3.way_in import generate_way_in
 # ============================================
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
+
+
+def _model_to_dict(model: Any) -> Dict[str, Any]:
+    if hasattr(model, "model_dump"):
+        return model.model_dump()
+    return model.dict()
+
+
+def _build_outreach_summary(package: Any) -> "OutreachSummary":
+    data = _model_to_dict(package)
+    instructions = data.get("action_instructions", {})
+    inst_list = instructions.get("instructions", []) if isinstance(instructions, dict) else []
+    action_texts = [
+        item.get("instruction", str(item)) if isinstance(item, dict) else str(item)
+        for item in inst_list
+    ]
+
+    linkedin = data.get("enriched_linkedin_message") or data.get("linkedin_outreach", {}).get("message_body", "")
+    email_primary = data.get("enriched_email_primary") or ""
+    email_pkg = data.get("email_outreach", {}) or {}
+    subject = ""
+    if isinstance(email_pkg, dict) and email_pkg.get("primary_email"):
+        subject = email_pkg["primary_email"].get("subject_line", "")
+
+    return OutreachSummary(
+        action_instructions=action_texts,
+        linkedin_message=linkedin[:2000] if linkedin else "",
+        email_subject=subject,
+        email_body_preview=email_primary[:2000] if email_primary else "",
+        recommended_order=data.get("recommended_order", []),
+        estimated_total_time_minutes=data.get("estimated_total_time_minutes", 0),
+    )
 
 # ============================================
 # Initialize FastAPI App
@@ -63,6 +97,12 @@ class AnalyzeRequest(BaseModel):
         ...,
         description="Descriptions of candidate's projects and work experience",
         min_length=10
+    )
+    candidate_name: Optional[str] = Field(
+        default="Candidate",
+        description="Display name for outreach generation",
+        min_length=1,
+        max_length=120,
     )
 
 
@@ -154,6 +194,24 @@ class ChemistryAnalysis(BaseModel):
     )
 
 
+class ProofCardSummary(BaseModel):
+    """Agent 4: skill proof for an opportunity."""
+    opportunity_title: str
+    summary: str
+    total_relevance_score: float
+    matched_skills: List[Dict[str, Any]]
+
+
+class OutreachSummary(BaseModel):
+    """Agent 5: outreach package summary for UI."""
+    action_instructions: List[str]
+    linkedin_message: str
+    email_subject: str
+    email_body_preview: str
+    recommended_order: List[str]
+    estimated_total_time_minutes: int
+
+
 class EnhancedMatchResult(BaseModel):
     """Individual opportunity match result with chemistry analysis."""
     opportunity_id: int
@@ -164,6 +222,9 @@ class EnhancedMatchResult(BaseModel):
     match_reasoning: str
     scores: ScoreDetail
     chemistry: ChemistryAnalysis
+    proof: ProofCardSummary
+    outreach: OutreachSummary
+    opportunity_url: Optional[str] = None
 
 
 class AnalyzeResponse(BaseModel):
@@ -247,21 +308,52 @@ async def analyze_candidate(request: AnalyzeRequest):
             )
         
         # ============================================
-        # Step 2: Get Top 3 Opportunities via Ranking
+        # Step 2: Live discovery + rank opportunities
         # ============================================
         logger.info("Step 2: Discovering and ranking opportunities...")
+        discovery_meta: Dict[str, Any] = {}
         try:
-            all_opportunities = get_mock_opportunities()
-            top_opportunities = rank_opportunities(
-                all_opportunities,
-                top_k=3
+            discovery_result = discover_live_opportunities()
+            all_opportunities = discovery_result["opportunities"]
+            discovery_meta = {
+                "discovery_mode": discovery_result["discovery_mode"],
+                "source_status": discovery_result.get("source_status", {}),
+            }
+
+            if not all_opportunities:
+                raise HTTPException(
+                    status_code=503,
+                    detail=(
+                        "No opportunities discovered from live sources. "
+                        "Check network, set GITHUB_TOKEN, or enable INROAD_ALLOW_MOCK_FALLBACK=true for dev only."
+                    ),
+                )
+
+            top_opportunities = rank_opportunities(all_opportunities, top_k=3)
+            logger.info(
+                f"Ranked {len(top_opportunities)} top opportunities from {len(all_opportunities)} "
+                f"(mode={discovery_meta['discovery_mode']})"
             )
-            logger.info(f"Ranked {len(top_opportunities)} top opportunities from {len(all_opportunities)} total")
+        except HTTPException:
+            raise
         except Exception as e:
             logger.error(f"Opportunity ranking failed: {str(e)}")
             raise HTTPException(
                 status_code=500,
                 detail=f"Failed to rank opportunities: {str(e)}"
+            )
+
+        # ============================================
+        # Step 2b: Skill graph (Agent 4) from portfolio
+        # ============================================
+        logger.info("Step 2b: Building skill proof graph from portfolio...")
+        try:
+            skill_graph = build_skill_graph_from_portfolio(request.project_descriptions)
+        except Exception as e:
+            logger.error(f"Skill graph build failed: {str(e)}")
+            raise HTTPException(
+                status_code=500,
+                detail=f"Failed to build skill proof graph: {str(e)}"
             )
         
         # ============================================
@@ -350,6 +442,58 @@ async def analyze_candidate(request: AnalyzeRequest):
                     way_in_strategy=way_in.actionable_sentence,
                     way_in_confidence=way_in.confidence
                 )
+
+                proof_dict = build_proof_for_opportunity(skill_graph, opp)
+                proof_summary = ProofCardSummary(
+                    opportunity_title=proof_dict.get("opportunity", {}).get("title", opp["title"]),
+                    summary=proof_dict.get("match", {}).get("summary", ""),
+                    total_relevance_score=float(proof_dict.get("match", {}).get("relevanceScore", 0)),
+                    matched_skills=proof_dict.get("matched_skills", []),
+                )
+
+                shared_contexts_payload = [
+                    {
+                        "context_type": ctx.context_type,
+                        "name": ctx.name,
+                        "relevance_score": ctx.relevance_score,
+                    }
+                    for ctx in context_response.shared_contexts
+                ]
+                engagement_payload = [
+                    {
+                        "person_name": item.person_name,
+                        "person_role": item.person_role,
+                        "interaction_type": item.interaction_type,
+                        "interaction_detail": item.interaction_detail,
+                    }
+                    for item in engagement_response.interactions
+                ]
+                connector_payload = {
+                    "best_connector": {
+                        "person_name": connector_response.best_connector.person_name,
+                        "relationship_to_candidate": connector_response.best_connector.relationship_to_candidate,
+                        "relationship_strength_to_candidate": connector_response.best_connector.relationship_strength_to_candidate,
+                    },
+                    "entry_probability": connector_response.entry_probability,
+                }
+                way_in_payload = {
+                    "actionable_sentence": way_in.actionable_sentence,
+                    "primary_signal": way_in.primary_signal,
+                    "confidence": way_in.confidence,
+                }
+
+                outreach_package = assemble_outreach_package(
+                    opportunity_title=opp["title"],
+                    candidate_name=request.candidate_name or "Candidate",
+                    inroad_score=inroad_score.inroad_score,
+                    way_in_strategy=way_in_payload,
+                    shared_contexts=shared_contexts_payload,
+                    engagement_signals=engagement_payload,
+                    connector_data=connector_payload,
+                    proof_card=proof_dict,
+                    opportunity_data=opp,
+                )
+                outreach_summary = _build_outreach_summary(outreach_package)
                 
                 matched_opportunities_list.append(
                     EnhancedMatchResult(
@@ -367,7 +511,10 @@ async def analyze_candidate(request: AnalyzeRequest):
                             opportunity_score=opp["opportunity_score"],
                             score_reasoning=opp["score_reasoning"]
                         ),
-                        chemistry=chemistry
+                        chemistry=chemistry,
+                        proof=proof_summary,
+                        outreach=outreach_summary,
+                        opportunity_url=opp.get("url"),
                     )
                 )
             
@@ -398,7 +545,9 @@ async def analyze_candidate(request: AnalyzeRequest):
                 "average_chemistry_score": round(avg_chemistry, 2),
                 "highest_chemistry_score": round(max(chemistry_scores), 2) if chemistry_scores else 0,
                 "seniority_level": candidate_profile["seniority_level"],
-                "primary_domain": candidate_profile["domain_expertise"][0] if candidate_profile["domain_expertise"] else "General"
+                "primary_domain": candidate_profile["domain_expertise"][0] if candidate_profile["domain_expertise"] else "General",
+                "discovery_mode": discovery_meta.get("discovery_mode"),
+                "discovery_sources": discovery_meta.get("source_status"),
             }
             
             logger.info("Analysis pipeline completed successfully")
