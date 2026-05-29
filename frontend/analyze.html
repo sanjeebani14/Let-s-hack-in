@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Analyze your profile with InRoad — hidden opportunities, fit scores, and your way in." />
+    <title>Analyze | InRoad</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script src="./scripts/tailwind-config.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="./styles/base.css" rel="stylesheet" />
+    <link href="./styles/components.css" rel="stylesheet" />
+  </head>
+  <body class="font-body-md text-body-md" data-page="analyze">
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <div id="site-header"></div>
+
+    <main id="main-content" class="bg-background pt-24">
+      <section class="hero-gradient border-b border-outline-variant px-margin-mobile py-xl md:px-margin-desktop">
+        <div class="mx-auto max-w-[900px]">
+          <p class="mb-sm font-data-sm text-data-sm uppercase tracking-widest text-primary-container">Agent pipeline</p>
+          <h1 class="mb-sm font-display-lg text-display-lg text-on-surface">Analyze your profile</h1>
+          <p class="mb-md font-body-lg text-body-lg text-on-surface-variant">
+            All five agents in one run: discovery, match, chemistry, proof, and outreach. Paste your real resume and projects — no sample data.
+          </p>
+          <p id="api-status" class="font-data-sm text-data-sm text-on-surface-variant">Checking API…</p>
+        </div>
+      </section>
+
+      <section class="px-margin-mobile py-xl md:px-margin-desktop">
+        <div class="mx-auto max-w-[900px]">
+          <form id="analyze-form" class="glass-card mb-lg rounded-xl p-lg">
+            <div class="mb-md">
+              <label class="mb-xs block font-body-md text-body-md font-medium text-on-surface" for="candidate_name">Your name</label>
+              <input
+                id="candidate_name"
+                name="candidate_name"
+                type="text"
+                class="w-full rounded-lg border border-outline-variant bg-surface-container px-sm py-sm text-on-surface focus:border-primary-container focus:ring-1 focus:ring-primary-container"
+                placeholder="Used in outreach messages"
+                value=""
+              />
+            </div>
+            <div class="mb-md">
+              <label class="mb-xs block font-body-md text-body-md font-medium text-on-surface" for="resume_text">Resume / CV</label>
+              <textarea
+                id="resume_text"
+                name="resume_text"
+                class="form-textarea w-full rounded-lg border border-outline-variant bg-surface-container px-sm py-sm text-on-surface focus:border-primary-container focus:ring-1 focus:ring-primary-container"
+                placeholder="Paste your resume text…"
+                required
+                minlength="10"
+              ></textarea>
+            </div>
+            <div class="mb-md">
+              <label class="mb-xs block font-body-md text-body-md font-medium text-on-surface" for="project_descriptions">Projects & outcomes</label>
+              <textarea
+                id="project_descriptions"
+                name="project_descriptions"
+                class="form-textarea w-full rounded-lg border border-outline-variant bg-surface-container px-sm py-sm text-on-surface focus:border-primary-container focus:ring-1 focus:ring-primary-container"
+                placeholder="Describe projects, ownership, measurable results…"
+                required
+                minlength="10"
+              ></textarea>
+            </div>
+            <div id="analyze-error" class="mb-md hidden rounded-lg border border-error bg-error-container px-sm py-sm font-body-sm text-body-sm text-on-error-container" role="alert"></div>
+            <div class="flex flex-col gap-sm sm:flex-row sm:items-center">
+              <button
+                id="analyze-submit"
+                type="submit"
+                class="rounded-full bg-primary-container px-xl py-md font-bold text-on-primary-container shadow-[0_0_24px_rgba(185,255,102,0.35)] transition-transform hover:scale-105"
+              >
+                Run analysis
+              </button>
+            </div>
+            <div id="analyze-loading" class="mt-md hidden flex flex-col gap-xs">
+              <div class="flex items-center gap-sm">
+                <div class="loading-spinner" aria-hidden="true"></div>
+                <span class="font-body-sm text-body-sm text-on-surface-variant">Running agents — may take 30–60s first time…</span>
+              </div>
+              <p id="loading-step" class="font-data-sm text-data-sm text-primary-container" aria-live="polite"></p>
+            </div>
+          </form>
+
+          <section id="analyze-results-section" class="hidden">
+            <div id="analyze-results"></div>
+          </section>
+        </div>
+      </section>
+    </main>
+
+    <div id="site-footer"></div>
+
+    <script src="./scripts/config.js"></script>
+    <script src="./scripts/api.js"></script>
+    <script src="./scripts/layout.js"></script>
+    <script src="./scripts/interactions.js"></script>
+    <script src="./scripts/results-render.js"></script>
+    <script src="./scripts/analyze.js"></script>
+  </body>
+</html>

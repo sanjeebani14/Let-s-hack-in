@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Opportunity | InRoad</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script src="./scripts/tailwind-config.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="./styles/base.css" rel="stylesheet" />
+    <link href="./styles/components.css" rel="stylesheet" />
+  </head>
+  <body class="font-body-md text-body-md" data-page="opportunity">
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <div id="site-header"></div>
+
+    <main id="main-content" class="bg-background px-margin-mobile pb-xl pt-24 md:px-margin-desktop">
+      <div class="mx-auto max-w-[900px]">
+        <a href="analyze.html" class="mb-md inline-block font-body-sm text-body-sm text-primary-container hover:underline">← Back to results</a>
+        <div id="opportunity-detail"></div>
+        <p id="opportunity-error" class="hidden font-body-sm text-body-sm text-error" role="alert"></p>
+      </div>
+    </main>
+
+    <div id="site-footer"></div>
+    <script src="./scripts/config.js"></script>
+    <script src="./scripts/layout.js"></script>
+    <script src="./scripts/interactions.js"></script>
+    <script src="./scripts/results-render.js"></script>
+    <script src="./scripts/opportunity.js"></script>
+  </body>
+</html>
