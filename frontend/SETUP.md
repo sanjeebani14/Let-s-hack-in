@@ -26,12 +26,15 @@ pip install -r requirements.txt
 python main.py
 ```
 
-**Terminal 2 — Frontend**
+**Terminal 2 — Frontend (Vite)**
 
 ```bash
 cd Let-s-hack-in/frontend
-python -m http.server 5500
+npm install
+npm run dev
 ```
+
+Optional: copy `.env.example` to `.env.local` if the API is not on `localhost:8000`.
 
 | Page | URL |
 |------|-----|
@@ -39,13 +42,14 @@ python -m http.server 5500
 | Analyze | http://localhost:5500/analyze.html |
 | Agents | http://localhost:5500/agents.html |
 | Opportunity detail | http://localhost:5500/opportunity.html?i=0 |
+| History | http://localhost:5500/history.html |
 
 ## Production API URL
 
-Edit `frontend/scripts/config.js`:
+Set at build time (see `DEPLOY.md`):
 
-```js
-window.INROAD_API_BASE = "https://your-api-host.example.com";
+```
+VITE_INROAD_API_BASE=https://your-api-host.example.com
 ```
 
 ## Policy

@@ -8,12 +8,9 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <script src="./scripts/tailwind-config.js"></script>
+    <link rel="stylesheet" href="/styles/main.css" />
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-    <link href="./styles/base.css" rel="stylesheet" />
-    <link href="./styles/components.css" rel="stylesheet" />
   </head>
   <body class="font-body-md text-body-md" data-page="analyze">
     <a class="skip-link" href="#main-content">Skip to content</a>
@@ -28,6 +25,10 @@
             All five agents in one run: discovery, match, chemistry, proof, and outreach. Paste your real resume and projects — no sample data.
           </p>
           <p id="api-status" class="font-data-sm text-data-sm text-on-surface-variant">Checking API…</p>
+          <p class="mt-xs font-data-sm text-data-sm text-on-surface-variant">
+            Past runs are saved on this device —
+            <a href="history.html" class="text-primary-container hover:underline">History</a>
+          </p>
         </div>
       </section>
 
@@ -95,11 +96,6 @@
 
     <div id="site-footer"></div>
 
-    <script src="./scripts/config.js"></script>
-    <script src="./scripts/api.js"></script>
-    <script src="./scripts/layout.js"></script>
-    <script src="./scripts/interactions.js"></script>
-    <script src="./scripts/results-render.js"></script>
-    <script src="./scripts/analyze.js"></script>
+    <script type="module" src="/src/entries/analyze.js"></script>
   </body>
 </html>

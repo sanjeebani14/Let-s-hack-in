@@ -1,6 +1,7 @@
 const NAV_LINKS = [
   { id: "home", label: "Home", href: "index.html" },
   { id: "analyze", label: "Analyze", href: "analyze.html" },
+  { id: "history", label: "History", href: "history.html" },
   { id: "agents", label: "Agents", href: "agents.html" },
 ];
 
@@ -61,6 +62,7 @@ function renderSiteFooter() {
           <div class="flex flex-col gap-xs">
             <span class="mb-2 font-data-sm text-data-sm text-primary-container">Product</span>
             <a class="font-data-sm text-data-sm text-on-surface-variant hover:text-primary-container" href="analyze.html">Analyze</a>
+            <a class="font-data-sm text-data-sm text-on-surface-variant hover:text-primary-container" href="history.html">History</a>
             <a class="font-data-sm text-data-sm text-on-surface-variant hover:text-primary-container" href="agents.html">Agents</a>
           </div>
           <div class="flex flex-col gap-xs">

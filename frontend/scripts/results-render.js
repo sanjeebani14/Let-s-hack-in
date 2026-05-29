@@ -1,3 +1,37 @@
+function escapeHtml(text) {
+  if (!text) return "";
+  return String(text)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
+
+/** Shorten raw GitHub issue titles for cards */
+function formatOpportunityTitle(title, sourceType) {
+  if (!title) return "Opportunity";
+  let t = title.trim();
+  const src = (sourceType || "").toLowerCase();
+  if (src.includes("github")) {
+    t = t.replace(/^\[FEATURE\]:\s*Title:\s*/i, "");
+    t = t.replace(/^\[[\w\s-]+\]:\s*/i, "");
+  }
+  if (t.length > 96) t = `${t.slice(0, 93)}…`;
+  return t;
+}
+
+function renderOutreachTeaser(outreach, detailHref) {
+  if (!outreach?.linkedin_message) return "";
+  const msg = outreach.linkedin_message.replace(/\s+/g, " ").trim();
+  const preview = msg.length > 140 ? `${msg.slice(0, 137)}…` : msg;
+  return `
+    <div class="mt-sm rounded-lg border border-outline-variant/60 bg-surface/30 p-sm">
+      <p class="mb-1 font-data-sm text-data-sm uppercase text-primary-container">Agent 5 — Outreach ready</p>
+      <p class="font-body-sm text-body-sm text-on-surface-variant">${escapeHtml(preview)}</p>
+      <a href="${detailHref}" class="mt-1 inline-block font-data-sm text-data-sm text-primary-container hover:underline">Copy messages & steps →</a>
+    </div>`;
+}
+
 function pct(value, max = 100) {
   return Math.min(100, Math.max(0, (value / max) * 100));
 }
@@ -14,7 +48,7 @@ function scoreBar(label, value, scale = 1) {
     </div>`;
 }
 
-function renderTags(items) {
+export function renderTags(items) {
   if (!items?.length) return '<span class="text-on-surface-variant">—</span>';
   return items.map((t) => `<span class="tag-chip">${t}</span>`).join(" ");
 }
@@ -70,12 +104,13 @@ function renderOutreachSection(outreach, index) {
     </div>`;
 }
 
-function renderOpportunityCard(opp, rank, options = {}) {
+export function renderOpportunityCard(opp, rank, options = {}) {
   const c = opp.chemistry;
   const s = opp.scores;
   const compact = options.compact;
   const forceOpen = options.forceOpen;
   const detailHref = `opportunity.html?i=${rank - 1}`;
+  const displayTitle = escapeHtml(formatOpportunityTitle(opp.title, opp.source_type));
   const urlLink = opp.opportunity_url
     ? `<a class="font-data-sm text-data-sm text-primary-container hover:underline" href="${opp.opportunity_url}" target="_blank" rel="noopener noreferrer">Source</a>`
     : "";
@@ -120,8 +155,8 @@ function renderOpportunityCard(opp, rank, options = {}) {
       <div class="mb-md flex flex-col gap-sm sm:flex-row sm:items-start sm:justify-between">
         <div>
           <p class="font-data-sm text-data-sm uppercase tracking-widest text-primary-container">#${rank} · ${opp.source_type.replace(/_/g, " ")}</p>
-          <h3 class="font-headline-md text-headline-md text-on-surface">${opp.title}</h3>
-          <p class="font-body-md text-body-md text-on-surface-variant">${opp.company}</p>
+          <h3 class="font-headline-md text-headline-md text-on-surface">${displayTitle}</h3>
+          <p class="font-body-md text-body-md text-on-surface-variant">${escapeHtml(opp.company)}</p>
           <div class="mt-1 flex gap-sm">${urlLink}<a href="${detailHref}" class="font-data-sm text-data-sm text-primary-container hover:underline">Full detail</a></div>
         </div>
         <div class="flex shrink-0 gap-sm">
@@ -136,13 +171,14 @@ function renderOpportunityCard(opp, rank, options = {}) {
         </div>
       </div>
       <p class="mb-md rounded-lg border border-outline-variant bg-surface/60 p-sm font-body-sm text-body-sm text-on-surface">
-        <span class="font-bold text-primary-container">Way in:</span> ${c.way_in_strategy}
+        <span class="font-bold text-primary-container">Way in:</span> ${escapeHtml(c.way_in_strategy)}
       </p>
+      ${compact ? renderOutreachTeaser(opp.outreach, detailHref) : ""}
       ${expanded}
     </article>`;
 }
 
-function bindCopyButtons(root = document) {
+export function bindCopyButtons(root = document) {
   root.querySelectorAll(".copy-btn").forEach((btn) => {
     btn.addEventListener("click", async () => {
       const id = btn.getAttribute("data-copy-target");

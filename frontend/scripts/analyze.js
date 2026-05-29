@@ -1,3 +1,5 @@
+import { bindCopyButtons, renderOpportunityCard, renderTags } from "./results-render.js";
+
 const PIPELINE_STEPS = [
   "Agent 1: Discovering opportunities…",
   "Agent 2: Matching your profile…",
@@ -27,7 +29,14 @@ function stopLoadingAnimation() {
   stepTimer = null;
 }
 
-function renderResults(data) {
+function displayResults(data, options = {}) {
+  const root = document.getElementById("analyze-results");
+  root.innerHTML = renderResults(data, options);
+  bindCopyButtons(root);
+  document.getElementById("analyze-results-section").classList.remove("hidden");
+}
+
+function renderResults(data, options = {}) {
   const profile = data.candidate_profile;
   const summary = data.summary;
   const discoveryLabel =
@@ -35,7 +44,16 @@ function renderResults(data) {
       ? "Live discovery — real sources"
       : summary.discovery_mode || "unknown";
 
+  const savedBanner = options.savedRunId
+    ? `<p class="mb-md rounded-lg border border-primary-container/30 bg-primary-container/10 px-sm py-xs font-body-sm text-body-sm text-on-surface">
+        Saved to <a href="history.html" class="font-bold text-primary-container hover:underline">History</a> on this device.
+      </p>`
+    : options.restored
+      ? `<p class="mb-md font-body-sm text-body-sm text-on-surface-variant">Showing a saved run from History.</p>`
+      : "";
+
   return `
+    ${savedBanner}
     <p class="mb-md font-body-sm text-body-sm text-primary-container">${discoveryLabel}</p>
     <div class="mb-lg grid grid-cols-2 gap-sm md:grid-cols-4">
       ${[
@@ -104,10 +122,15 @@ async function runAnalysis() {
   }
 
   setLoading(true);
+  const controller = new AbortController();
+  const timeoutMs = 120000;
+  const timeoutId = window.setTimeout(() => controller.abort(), timeoutMs);
+
   try {
     const res = await fetch(`${window.INROAD_API_BASE}/analyze`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
+      signal: controller.signal,
       body: JSON.stringify({
         resume_text: resume,
         project_descriptions: projects,
@@ -119,20 +142,54 @@ async function runAnalysis() {
 
     sessionStorage.setItem("inroad_last_analysis", JSON.stringify(data));
 
-    const root = document.getElementById("analyze-results");
-    root.innerHTML = renderResults(data);
-    bindCopyButtons(root);
+    let savedRunId = null;
+    if (window.InRoadHistory) {
+      savedRunId = window.InRoadHistory.saveAnalysisRun(data, { candidateName });
+      window.InRoadHistory.activateRun({ id: savedRunId, data });
+    }
 
-    document.getElementById("analyze-results-section").classList.remove("hidden");
+    displayResults(data, { savedRunId });
     document.getElementById("analyze-results-section").scrollIntoView({ behavior: "smooth" });
   } catch (err) {
-    showError(
-      err.message.includes("fetch")
-        ? "Cannot reach API. Start backend: python main.py"
-        : err.message
-    );
+    if (err.name === "AbortError") {
+      showError("Analysis timed out after 2 minutes. Check the API terminal or try again.");
+    } else if (err.message.includes("fetch") || err.message.includes("Failed to fetch")) {
+      showError("Cannot reach API. Start backend: python main.py");
+    } else {
+      showError(typeof err.message === "string" ? err.message : "Analysis failed");
+    }
   } finally {
+    window.clearTimeout(timeoutId);
     setLoading(false);
+  }
+}
+
+function tryRestoreResults() {
+  const params = new URLSearchParams(window.location.search);
+  const runId = params.get("run");
+
+  if (runId && window.InRoadHistory) {
+    const entry = window.InRoadHistory.getAnalysisRun(runId);
+    if (entry?.data) {
+      window.InRoadHistory.activateRun(entry);
+      if (entry.candidateName) {
+        const nameEl = document.getElementById("candidate_name");
+        if (nameEl) nameEl.value = entry.candidateName;
+      }
+      displayResults(entry.data, { restored: true });
+      return true;
+    }
+  }
+
+  try {
+    const raw = sessionStorage.getItem("inroad_last_analysis");
+    if (!raw) return false;
+    const data = JSON.parse(raw);
+    if (!data?.matched_opportunities?.length) return false;
+    displayResults(data, { restored: true });
+    return true;
+  } catch {
+    return false;
   }
 }
 
@@ -141,6 +198,8 @@ function initAnalyzePage() {
     e.preventDefault();
     runAnalysis();
   });
+
+  tryRestoreResults();
 
   fetch(`${window.INROAD_API_BASE}/`)
     .then((r) => r.json())
