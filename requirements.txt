@@ -11,3 +11,7 @@ transformers
 torch
 tf-keras
 cors
+firebase-admin
+python-multipart
+pypdf
+python-docx

@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>InRoad | Skill Intelligence Graph</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Geist:wght@400;500;600;700&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        body {
+            background-color: #0b1326;
+            color: #dae2fd;
+            overflow-x: hidden;
+        }
+        .glass-card {
+            background: rgba(30, 41, 59, 0.4);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .glass-card:hover {
+            background: rgba(30, 41, 59, 0.6);
+            border-color: rgba(123, 208, 255, 0.3);
+            box-shadow: 0 0 20px rgba(123, 208, 255, 0.1);
+        }
+        .glow-cyan {
+            filter: drop-shadow(0 0 8px rgba(123, 208, 255, 0.4));
+        }
+        .skill-node {
+            transition: transform 0.3s ease, filter 0.3s ease;
+        }
+        .skill-node:hover {
+            transform: scale(1.1);
+            filter: brightness(1.2);
+        }
+        @keyframes pulse-subtle {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        .animate-pulse-subtle {
+            animation: pulse-subtle 3s infinite ease-in-out;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-surface": "#dae2fd",
+                        "primary-container": "#38bdf8",
+                        "surface-tint": "#7bd0ff",
+                        "on-tertiary": "#003731",
+                        "inverse-surface": "#dae2fd",
+                        "on-tertiary-container": "#004d44",
+                        "on-secondary": "#131e8c",
+                        "on-surface-variant": "#bdc8d1",
+                        "on-primary-fixed": "#001e2c",
+                        "outline": "#87929a",
+                        "surface": "#0b1326",
+                        "on-primary-fixed-variant": "#004c69",
+                        "secondary-container": "#2f3aa3",
+                        "on-tertiary-fixed": "#00201c",
+                        "secondary-fixed": "#e0e0ff",
+                        "on-tertiary-fixed-variant": "#005047",
+                        "inverse-primary": "#00668a",
+                        "tertiary-fixed-dim": "#3cddc7",
+                        "outline-variant": "#3e484f",
+                        "primary-fixed": "#c4e7ff",
+                        "background": "#0b1326",
+                        "error": "#ffb4ab",
+                        "on-primary-container": "#004965",
+                        "secondary": "#bdc2ff",
+                        "surface-container-low": "#131b2e",
+                        "on-background": "#dae2fd",
+                        "on-error": "#690005",
+                        "surface-bright": "#31394d",
+                        "primary-fixed-dim": "#7bd0ff",
+                        "surface-variant": "#2d3449",
+                        "surface-container-high": "#222a3d",
+                        "error-container": "#93000a",
+                        "surface-container": "#171f33",
+                        "secondary-fixed-dim": "#bdc2ff",
+                        "on-secondary-fixed": "#000767",
+                        "inverse-on-surface": "#283044",
+                        "tertiary": "#45e3ce",
+                        "on-secondary-container": "#a8afff",
+                        "surface-container-lowest": "#060e20",
+                        "primary": "#8ed5ff",
+                        "on-secondary-fixed-variant": "#2f3aa3",
+                        "on-primary": "#00354a",
+                        "surface-container-highest": "#2d3449",
+                        "on-error-container": "#ffdad6",
+                        "surface-dim": "#0b1326",
+                        "tertiary-container": "#07c7b2",
+                        "tertiary-fixed": "#62fae3"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "md": "24px",
+                        "sm": "16px",
+                        "margin-desktop": "48px",
+                        "margin-mobile": "16px",
+                        "xl": "64px",
+                        "xs": "8px",
+                        "lg": "40px",
+                        "base": "4px",
+                        "gutter": "24px"
+                    },
+                    "fontFamily": {
+                        "display-lg": ["Geist"],
+                        "data-lg": ["Space Grotesk"],
+                        "headline-lg": ["Geist"],
+                        "body-md": ["Inter"],
+                        "data-sm": ["Space Grotesk"],
+                        "headline-lg-mobile": ["Geist"],
+                        "body-sm": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "headline-md": ["Geist"]
+                    },
+                    "fontSize": {
+                        "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "data-lg": ["20px", {"lineHeight": "24px", "letterSpacing": "0.02em", "fontWeight": "600"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "data-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                        "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "500"}]
+                    }
+                },
+            },
+        }
+    </script>
+</head>
+<body class="flex min-h-screen">
+<!-- SideNavBar (Shared Component) -->
+<aside class="fixed left-0 top-0 h-full w-[280px] z-40 bg-surface-container-lowest/80 backdrop-blur-2xl border-r border-outline-variant/10 flex flex-col py-md gap-sm hidden md:flex">
+<div class="px-sm mb-lg">
+<h1 class="font-headline-md text-headline-md text-primary-container">InRoad</h1>
+<p class="font-data-sm text-data-sm text-on-surface-variant opacity-70">Career Engine Active</p>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center px-sm py-3 text-on-surface-variant hover:bg-surface-variant/50 hover:translate-x-1 transition-all duration-200" href="#">
+<span class="material-symbols-outlined mr-3">insights</span>
+<span class="font-data-sm text-data-sm">Intelligence</span>
+</a>
+<a class="flex items-center px-sm py-3 bg-primary-container/20 text-primary border-r-4 border-primary font-bold" href="#">
+<span class="material-symbols-outlined mr-3">account_tree</span>
+<span class="font-data-sm text-data-sm">Skill Graph</span>
+</a>
+<a class="flex items-center px-sm py-3 text-on-surface-variant hover:bg-surface-variant/50 hover:translate-x-1 transition-all duration-200" href="#">
+<span class="material-symbols-outlined mr-3">star_half</span>
+<span class="font-data-sm text-data-sm">Matches</span>
+</a>
+<a class="flex items-center px-sm py-3 text-on-surface-variant hover:bg-surface-variant/50 hover:translate-x-1 transition-all duration-200" href="#">
+<span class="material-symbols-outlined mr-3">auto_awesome</span>
+<span class="font-data-sm text-data-sm">Outreach</span>
+</a>
+<a class="flex items-center px-sm py-3 text-on-surface-variant hover:bg-surface-variant/50 hover:translate-x-1 transition-all duration-200" href="#">
+<span class="material-symbols-outlined mr-3">settings</span>
+<span class="font-data-sm text-data-sm">Settings</span>
+</a>
+</nav>
+<div class="mt-auto px-sm pt-md">
+<button class="w-full py-3 bg-primary text-on-primary font-bold rounded-lg flex items-center justify-center gap-2 hover:scale-105 active:scale-95 transition-transform shadow-[0_0_20px_rgba(142,213,255,0.3)]">
+<span class="material-symbols-outlined">analytics</span>
+<span>Analyze Profile</span>
+</button>
+</div>
+</aside>
+<!-- Main Canvas -->
+<main class="flex-1 ml-0 md:ml-[280px] p-md lg:p-xl transition-all">
+<!-- Top Navigation (Mobile) -->
+<header class="flex md:hidden justify-between items-center mb-md">
+<h2 class="font-headline-md text-headline-md text-primary">InRoad</h2>
+<button class="p-2"><span class="material-symbols-outlined text-primary">menu</span></button>
+</header>
+<!-- Page Header -->
+<div class="mb-lg flex flex-col md:flex-row md:items-end justify-between gap-md">
+<div>
+<h2 class="font-display-lg text-display-lg text-on-surface leading-tight">Skill Intelligence</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mt-2">A high-fidelity map of your expertise validated through verified proofs and neural skill-matching benchmarks.</p>
+</div>
+<div class="flex gap-sm">
+<div class="bg-surface-container-high px-4 py-2 rounded-lg border border-outline-variant/30 flex items-center gap-3">
+<span class="font-data-sm text-data-sm text-on-surface-variant uppercase tracking-widest">Global Rank</span>
+<span class="font-data-lg text-data-lg text-tertiary">Top 0.4%</span>
+</div>
+</div>
+</div>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+<!-- Skill Graph Container -->
+<section class="lg:col-span-8 glass-card rounded-xl p-md min-h-[500px] flex flex-col relative overflow-hidden">
+<div class="flex items-center justify-between mb-md z-10">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">hub</span>
+<h3 class="font-headline-md text-headline-md">Skill Architecture</h3>
+</div>
+<div class="flex gap-xs">
+<span class="px-2 py-1 bg-surface-variant/50 text-xs font-data-sm rounded border border-outline-variant/20">Spider Chart</span>
+<span class="px-2 py-1 bg-primary/10 text-primary text-xs font-data-sm rounded border border-primary/30">Interactive</span>
+</div>
+</div>
+<!-- SVG Skill Graph (Spider/Radar style) -->
+<div class="flex-1 flex items-center justify-center relative">
+<svg class="w-full max-w-[400px] h-auto glow-cyan" viewbox="0 0 400 400">
+<!-- Grid Lines -->
+<circle cx="200" cy="200" fill="none" r="160" stroke="rgba(142,213,255,0.05)" stroke-width="1"></circle>
+<circle cx="200" cy="200" fill="none" r="120" stroke="rgba(142,213,255,0.05)" stroke-width="1"></circle>
+<circle cx="200" cy="200" fill="none" r="80" stroke="rgba(142,213,255,0.05)" stroke-width="1"></circle>
+<circle cx="200" cy="200" fill="none" r="40" stroke="rgba(142,213,255,0.05)" stroke-width="1"></circle>
+<!-- Axis Lines -->
+<line stroke="rgba(142,213,255,0.1)" stroke-width="1" x1="200" x2="200" y1="40" y2="360"></line>
+<line stroke="rgba(142,213,255,0.1)" stroke-width="1" x1="40" x2="360" y1="200" y2="200"></line>
+<line stroke="rgba(142,213,255,0.1)" stroke-width="1" x1="87" x2="313" y1="87" y2="313"></line>
+<line stroke="rgba(142,213,255,0.1)" stroke-width="1" x1="87" x2="313" y1="313" y2="87"></line>
+<!-- Data Polygon -->
+<polygon fill="rgba(123,208,255,0.15)" points="200,60 300,120 340,200 280,310 200,340 100,290 60,200 120,100" stroke="#8ed5ff" stroke-width="2"></polygon>
+<!-- Nodes -->
+<circle class="skill-node" cx="200" cy="60" fill="#8ed5ff" r="5"></circle>
+<circle class="skill-node" cx="300" cy="120" fill="#8ed5ff" r="5"></circle>
+<circle class="skill-node" cx="340" cy="200" fill="#8ed5ff" r="5"></circle>
+<circle class="skill-node" cx="280" cy="310" fill="#8ed5ff" r="5"></circle>
+<circle class="skill-node" cx="200" cy="340" fill="#8ed5ff" r="5"></circle>
+<circle class="skill-node" cx="100" cy="290" fill="#8ed5ff" r="5"></circle>
+<circle class="skill-node" cx="60" cy="200" fill="#8ed5ff" r="5"></circle>
+<circle class="skill-node" cx="120" cy="100" fill="#8ed5ff" r="5"></circle>
+</svg>
+<!-- Labels (Absolute Positioned) -->
+<div class="absolute top-[8%] left-1/2 -translate-x-1/2 font-data-sm text-primary uppercase tracking-tighter">AI Logic</div>
+<div class="absolute bottom-[8%] left-1/2 -translate-x-1/2 font-data-sm text-primary uppercase tracking-tighter">Backend</div>
+<div class="absolute top-1/2 -right-4 -translate-y-1/2 font-data-sm text-primary uppercase tracking-tighter -rotate-90">Frontend</div>
+<div class="absolute top-1/2 -left-4 -translate-y-1/2 font-data-sm text-primary uppercase tracking-tighter rotate-90">Systems</div>
+</div>
+<div class="mt-md p-sm bg-surface-container-lowest/50 rounded-lg border border-primary/10">
+<p class="font-data-sm text-data-sm text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-tertiary text-sm">bolt</span>
+                        <span data-profile-summary>AI INSIGHT: Run analysis to map your skill DNA.</span>
+                    </p>
+</div>
+</section>
+<!-- Quick Metrics -->
+<aside class="lg:col-span-4 flex flex-col gap-gutter">
+<div class="glass-card rounded-xl p-md">
+<h4 class="font-data-sm text-data-sm text-on-surface-variant uppercase mb-sm tracking-widest">Skill Proficiency</h4>
+<div class="space-y-4">
+<div class="space-y-1">
+<div class="flex justify-between font-data-sm text-data-sm">
+<span>LLM Architecture</span>
+<span class="text-primary">94%</span>
+</div>
+<div class="h-1 bg-surface-variant rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[94%] glow-cyan"></div>
+</div>
+</div>
+<div class="space-y-1">
+<div class="flex justify-between font-data-sm text-data-sm">
+<span>React/TypeScript</span>
+<span class="text-primary">88%</span>
+</div>
+<div class="h-1 bg-surface-variant rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[88%] glow-cyan"></div>
+</div>
+</div>
+<div class="space-y-1">
+<div class="flex justify-between font-data-sm text-data-sm">
+<span>Distributed Systems</span>
+<span class="text-primary">72%</span>
+</div>
+<div class="h-1 bg-surface-variant rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[72%] glow-cyan"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="glass-card rounded-xl p-md relative overflow-hidden">
+<div class="absolute -right-4 -top-4 opacity-10">
+<span class="material-symbols-outlined text-[100px] text-tertiary">workspace_premium</span>
+</div>
+<h4 class="font-data-sm text-data-sm text-on-surface-variant uppercase mb-sm tracking-widest">Verification Status</h4>
+<div class="flex items-center gap-4">
+<div class="h-16 w-16 rounded-full border-4 border-tertiary border-t-transparent animate-spin duration-[4000ms] flex items-center justify-center">
+<span class="text-tertiary font-bold">12</span>
+</div>
+<div>
+<p class="font-headline-md text-headline-md text-tertiary">Proofs Found</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">4 Pending review</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- Proof Cards Section -->
+<section class="lg:col-span-12">
+<div class="flex items-center justify-between mb-md">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-tertiary">verified</span>
+<h3 class="font-headline-md text-headline-md">Skill Proof Repository</h3>
+</div>
+<button class="text-primary font-data-sm text-data-sm hover:underline flex items-center gap-1">
+                        Add Evidence <span class="material-symbols-outlined text-sm">add_circle</span>
+</button>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-gutter" data-proof-cards>
+<!-- Populated from profile extraction -->
+<div class="hidden glass-card rounded-xl overflow-hidden flex flex-col">
+<div class="h-32 bg-surface-variant relative">
+<img alt="GitHub Repository" class="w-full h-full object-cover opacity-60" data-alt="Close-up shot of a high-resolution laptop screen displaying complex code in a dark mode IDE with vibrant syntax highlighting in cyan and violet. The workspace is dimly lit with a cool blue ambient glow, suggesting a high-performance software engineering environment. The aesthetic is clean and professional, focusing on technical precision and modern digital development." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAJBT-a0dpyCvOrSVqJLBzl4uOtNjWTX2DTQwo1iOQNL05LWYIKHUmfWz8vWZ7GHsZj5YBQb6gv2fge0OvTTpLFmJ0_qalMbzcd8H1pRjNzlzIwy3H0m0C3b0NT1y81UtdAd3n0E6WeK0vBZ6b8krtbF9blnamvC_vmTCJ4IZu9Ehvj3EeHsfwZ--Jzx4Fg4NGK2pNOWr9zpyDafer7PGsZDcpqapVVQxj0xE7fyQvHS_px9dBY8a9vvLua--TUzgGSeuaDnIk-"/>
+<div class="absolute top-2 right-2 bg-surface/80 backdrop-blur-md px-2 py-1 rounded text-[10px] font-bold text-primary flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]">link</span> GITHUB
+                            </div>
+</div>
+<div class="p-4 flex-1 flex flex-col">
+<h5 class="font-data-lg text-data-lg mb-1">Vector-Db Engine</h5>
+<p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-2 mb-4">Core contributor to high-performance semantic search implementation.</p>
+<div class="mt-auto flex items-center justify-between">
+<div class="flex -space-x-2">
+<div class="h-6 w-6 rounded-full border-2 border-surface bg-primary/20 flex items-center justify-center text-[10px]">AI</div>
+<div class="h-6 w-6 rounded-full border-2 border-surface bg-secondary/20 flex items-center justify-center text-[10px]">DB</div>
+</div>
+<span class="font-data-sm text-data-sm text-on-surface-variant">Dec 2023</span>
+</div>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="glass-card rounded-xl overflow-hidden flex flex-col">
+<div class="h-32 bg-surface-variant relative">
+<img alt="Hackathon Trophy" class="w-full h-full object-cover opacity-60" data-alt="A futuristic digital trophy or medal rendered in high-fidelity 3D with glowing blue circuitry lines and a crystalline finish. It sits against a dark, tech-focused background with subtle bokeh lights. The lighting is dramatic and focused, emphasizing the achievement and the high-tech, digital-first ecosystem of a hackathon victory." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBIp4P_tRoH62scIYGdNSfkujMMZE2sQlYuScsjtUiixV5IHo_MMYhUrDmFyRaA9L8XSQ0a9jTrneCbzVVdkw2uHymtDFl2ZJ9n2LhnS6Ly0xlLvvpQ4Iu0WK99rC_1bQo1NTyTmQrIkSozZBv5OJl0kcNRmGl1Bi9QHtvyY_gjaecig-R8GVJoe63-O8mOtg-nkNIiMcOj-t22wJ1jJ3Js-X1IkT9A7ZOznBfSom1eFpb6hH7KxpqgcZNzPJEIcA_SS5x_V0WF"/>
+<div class="absolute top-2 right-2 bg-surface/80 backdrop-blur-md px-2 py-1 rounded text-[10px] font-bold text-tertiary flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]">emoji_events</span> WINNER
+                            </div>
+</div>
+<div class="p-4 flex-1 flex flex-col">
+<h5 class="font-data-lg text-data-lg mb-1">Eth-Global 2024</h5>
+<p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-2 mb-4">First place in 'Privacy Track' for ZK-proof implementation in user auth.</p>
+<div class="mt-auto flex items-center justify-between">
+<div class="flex gap-1">
+<span class="px-2 py-1 bg-tertiary/10 text-tertiary text-[10px] rounded">ZK-Proofs</span>
+</div>
+<span class="font-data-sm text-data-sm text-on-surface-variant">Feb 2024</span>
+</div>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="glass-card rounded-xl overflow-hidden flex flex-col">
+<div class="h-32 bg-surface-variant relative flex items-center justify-center overflow-hidden">
+<div class="absolute inset-0 bg-gradient-to-br from-secondary/30 to-primary/30 opacity-50"></div>
+<span class="material-symbols-outlined text-[64px] text-white/20 animate-pulse-subtle">groups</span>
+<div class="absolute top-2 right-2 bg-surface/80 backdrop-blur-md px-2 py-1 rounded text-[10px] font-bold text-secondary flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]">rate_review</span> PEER REVIEW
+                            </div>
+</div>
+<div class="p-4 flex-1 flex flex-col">
+<h5 class="font-data-lg text-data-lg mb-1">Senior Architect Auth</h5>
+<p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-2 mb-4">"Exceptional mastery of React concurrency and state management patterns."</p>
+<div class="mt-auto flex items-center gap-2">
+<img alt="Reviewer" class="h-6 w-6 rounded-full object-cover" data-alt="A professional portrait of a senior software architect with a friendly but serious expression. He is set against a blurred office background with cool, natural lighting. The image represents professional authority and trust, fitting the visionary and high-performance environment of a tech platform." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAq6LvT_l6v7jKqYvAaSvhq0BCqbvDNBrwgB-_QqF5GHho7iFAXxVRfGdgFzY-Mqcwnb0sjByyp6STYl31JUiwYl2eu8f5sUoU5OtkbsXcHJ49MtAfsRpDErMYtAcDlC9KCWUD9sABwrb4NYmIkkpTgkrcQgkZeFLHos82rlTI_oek83XOU474L4yAkQrZJallKnt8f8DEW7VC1T_o6j9psYhNCdznwm5oiJNv82iaOliNtMPlN9i7XypvF2y-C6n6ZBOrSKSo0"/>
+<span class="font-data-sm text-data-sm text-on-surface">Alex M., CTO</span>
+</div>
+</div>
+</div>
+<!-- Card 4 (Add New - Interaction Placeholder) -->
+<div class="border-2 border-dashed border-outline-variant/30 rounded-xl flex flex-col items-center justify-center p-md text-on-surface-variant hover:border-primary/50 hover:text-primary transition-all cursor-pointer group">
+<span class="material-symbols-outlined text-[48px] mb-2 group-hover:scale-110 transition-transform">post_add</span>
+<p class="font-data-sm text-data-sm uppercase tracking-widest">Link New Proof</p>
+</div>
+</div>
+</section>
+</div>
+<!-- Footer (Shared Component) -->
+<footer class="mt-xl flex flex-col md:flex-row justify-between items-center border-t border-outline-variant/20 py-xl w-full">
+<div class="mb-sm md:mb-0">
+<span class="font-display-lg text-display-lg text-primary opacity-20">InRoad</span>
+<p class="font-data-sm text-data-sm text-outline mt-1">© 2024 InRoad AI. Career Intelligence Engineered.</p>
+</div>
+<div class="flex gap-lg">
+<a class="font-data-sm text-data-sm text-outline hover:text-primary-container transition-colors" href="#">Privacy Protocol</a>
+<a class="font-data-sm text-data-sm text-outline hover:text-primary-container transition-colors" href="#">Neural Terms</a>
+<a class="font-data-sm text-data-sm text-outline hover:text-primary-container transition-colors" href="#">System Status</a>
+<a class="font-data-sm text-data-sm text-outline hover:text-primary-container transition-colors" href="#">API</a>
+</div>
+</footer>
+</main>
+<!-- Interactive Layer / Floating Elements -->
+<div class="fixed bottom-lg right-lg z-50">
+<button class="h-14 w-14 bg-primary text-on-primary rounded-full shadow-[0_0_20px_rgba(142,213,255,0.4)] flex items-center justify-center hover:scale-110 active:scale-95 transition-transform">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+</button>
+</div>
+<script>
+        // Simple hover micro-interactions for skill nodes
+        document.querySelectorAll('.skill-node').forEach(node => {
+            node.addEventListener('mouseenter', () => {
+                const target = document.querySelector('polygon');
+                target.style.filter = 'drop-shadow(0 0 12px rgba(123, 208, 255, 0.6))';
+                target.style.transition = 'filter 0.3s ease';
+            });
+            node.addEventListener('mouseleave', () => {
+                const target = document.querySelector('polygon');
+                target.style.filter = 'none';
+            });
+        });
+
+        // Atmospheric mouse glow effect
+        document.addEventListener('mousemove', (e) => {
+            const glow = document.createElement('div');
+            // Throttled if needed, but for now just subtle
+            if (Math.random() > 0.95) {
+                const x = e.clientX;
+                const y = e.clientY;
+                const star = document.createElement('div');
+                star.style.left = x + 'px';
+                star.style.top = y + 'px';
+                star.className = 'fixed pointer-events-none w-1 h-1 bg-primary/30 rounded-full blur-[2px] z-[100]';
+                document.body.appendChild(star);
+                setTimeout(() => star.remove(), 1000);
+            }
+        });
+    </script>
+<link rel="manifest" href="/manifest.json"/>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="/js/auth.js"></script>
+<script src="/js/pages/auth-shared.js"></script>
+<script src="/js/config.js"></script>
+<script src="/js/store.js"></script>
+<script src="/js/api.js"></script>
+<script src="/js/utils.js"></script>
+<script src="/js/nav.js"></script>
+<script src="/js/pages/skills.js"></script>
+</body></html>

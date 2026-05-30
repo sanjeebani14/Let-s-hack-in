@@ -1,0 +1,27 @@
+John Doe
+Software Engineer
+Email: john@example.com
+
+SKILLS
+Python, JavaScript, React, FastAPI, Node.js
+
+EXPERIENCE
+Software Engineer at TechCorp
+June 2022 - Present
+- Built a scalable microservices architecture.
+- Reduced latency by 40% using Redis.
+
+INTERNSHIPS
+Software Engineering Intern at WebStartup
+May 2021 - August 2021
+- Developed frontend components using React.
+- Wrote unit tests in Jest.
+
+PROJECTS
+Personal Portfolio Website
+- Created a high-fidelity portfolio website using React and Framer Motion.
+- Integrated a headless CMS for dynamic content generation.
+
+AI Opportunity Hacker
+- Built an automated web scraper in Python to extract job listings.
+- Used GPT-4 to generate customized outreach templates.

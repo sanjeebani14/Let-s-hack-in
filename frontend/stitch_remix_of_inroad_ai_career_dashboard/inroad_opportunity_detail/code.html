@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>InRoad | Senior Neural Architect Opportunity</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Space+Grotesk:wght@500;600;700&amp;family=Geist:wght@400;500;600;700&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glow-pulse:active {
+            box-shadow: 0 0 20px rgba(123, 208, 255, 0.4);
+            transform: scale(0.98);
+        }
+        .glass-panel {
+            background: rgba(11, 19, 38, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .career-match-ring {
+            transition: stroke-dashoffset 1s ease-out;
+        }
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
+        }
+    </style>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-surface": "#dae2fd",
+                    "primary-container": "#38bdf8",
+                    "surface-tint": "#7bd0ff",
+                    "on-tertiary": "#003731",
+                    "inverse-surface": "#dae2fd",
+                    "on-tertiary-container": "#004d44",
+                    "on-secondary": "#131e8c",
+                    "on-surface-variant": "#bdc8d1",
+                    "on-primary-fixed": "#001e2c",
+                    "outline": "#87929a",
+                    "surface": "#0b1326",
+                    "on-primary-fixed-variant": "#004c69",
+                    "secondary-container": "#2f3aa3",
+                    "on-tertiary-fixed": "#00201c",
+                    "secondary-fixed": "#e0e0ff",
+                    "on-tertiary-fixed-variant": "#005047",
+                    "inverse-primary": "#00668a",
+                    "tertiary-fixed-dim": "#3cddc7",
+                    "outline-variant": "#3e484f",
+                    "primary-fixed": "#c4e7ff",
+                    "background": "#0b1326",
+                    "error": "#ffb4ab",
+                    "on-primary-container": "#004965",
+                    "secondary": "#bdc2ff",
+                    "surface-container-low": "#131b2e",
+                    "on-background": "#dae2fd",
+                    "on-error": "#690005",
+                    "surface-bright": "#31394d",
+                    "primary-fixed-dim": "#7bd0ff",
+                    "surface-variant": "#2d3449",
+                    "surface-container-high": "#222a3d",
+                    "error-container": "#93000a",
+                    "surface-container": "#171f33",
+                    "secondary-fixed-dim": "#bdc2ff",
+                    "on-secondary-fixed": "#000767",
+                    "inverse-on-surface": "#283044",
+                    "tertiary": "#45e3ce",
+                    "on-secondary-container": "#a8afff",
+                    "surface-container-lowest": "#060e20",
+                    "primary": "#8ed5ff",
+                    "on-secondary-fixed-variant": "#2f3aa3",
+                    "on-primary": "#00354a",
+                    "surface-container-highest": "#2d3449",
+                    "on-error-container": "#ffdad6",
+                    "surface-dim": "#0b1326",
+                    "tertiary-container": "#07c7b2",
+                    "tertiary-fixed": "#62fae3"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "md": "24px",
+                    "sm": "16px",
+                    "margin-desktop": "48px",
+                    "margin-mobile": "16px",
+                    "xl": "64px",
+                    "xs": "8px",
+                    "lg": "40px",
+                    "base": "4px",
+                    "gutter": "24px"
+            },
+            "fontFamily": {
+                    "display-lg": ["Geist"],
+                    "data-lg": ["Space Grotesk"],
+                    "headline-lg": ["Geist"],
+                    "body-md": ["Inter"],
+                    "data-sm": ["Space Grotesk"],
+                    "headline-lg-mobile": ["Geist"],
+                    "body-sm": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "headline-md": ["Geist"]
+            },
+            "fontSize": {
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "data-lg": ["20px", {"lineHeight": "24px", "letterSpacing": "0.02em", "fontWeight": "600"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "data-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "500"}]
+            }
+          },
+        },
+      }
+    </script>
+</head>
+<body class="bg-background text-on-surface font-body-md overflow-x-hidden">
+<!-- TopNavBar -->
+<header class="fixed top-0 w-full z-50 bg-surface/50 backdrop-blur-xl border-b border-outline-variant/20 shadow-[0_0_20px_rgba(123,208,255,0.15)]">
+<div class="flex justify-between items-center px-margin-desktop h-20 w-full max-w-[1440px] mx-auto">
+<div class="flex items-center gap-xl">
+<span class="font-display-lg text-display-lg font-bold tracking-tighter text-primary">InRoad</span>
+<nav class="hidden md:flex gap-lg items-center">
+<a class="text-on-surface-variant hover:text-on-surface transition-colors font-body-md text-body-md" href="#">Dashboard</a>
+<a class="text-on-surface-variant hover:text-on-surface transition-colors font-body-md text-body-md" href="#">Skills</a>
+<a class="text-primary font-bold border-b-2 border-primary pb-1 font-body-md text-body-md" href="#">Opportunities</a>
+<a class="text-on-surface-variant hover:text-on-surface transition-colors font-body-md text-body-md" href="#">Outreach</a>
+</nav>
+</div>
+<div class="flex items-center gap-md">
+<div class="hidden lg:block relative group">
+<input class="bg-surface-variant/30 border border-outline-variant/30 rounded-full px-md py-xs text-body-sm focus:ring-1 focus:ring-primary focus:border-primary w-64 transition-all group-hover:w-80 outline-none" placeholder="Search insights..." type="text"/>
+<span class="material-symbols-outlined absolute right-3 top-2 text-outline" data-icon="search">search</span>
+</div>
+<img alt="User Profile Avatar" class="w-10 h-10 rounded-full border border-primary/20 hover:scale-105 active:scale-95 transition-transform cursor-pointer" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCR2lSDBtxVuuUFtY5a1IVlzt5eKke6z9dLdsZqUb50DBsMZkaU5k6_RcJkLpmdgAVcFmr6CG-mkbcghqQGsB8iLkVSOVTqpNXgompnRbPIwBzonPhIRlMdECjc6TUPCzv_JYGAX-VZ_PLhAwUtXoQljoW9_B9SKwUXb7XAhyu2fcUNcLF9ysfL696vuEEb2J_Vc0m_nbXja44Dc90IAMQpUaVR_Enje8C81hfnrc2_wraBdG8OmNMv6FREJCP1Mqoc_Hr0i04B"/>
+</div>
+</div>
+</header>
+<!-- Sidebar (Hidden on Mobile) -->
+<aside class="hidden md:flex flex-col fixed left-0 top-20 h-[calc(100vh-80px)] w-[280px] z-40 bg-surface-container-lowest/80 backdrop-blur-2xl border-r border-outline-variant/10 py-md gap-sm">
+<div class="px-md mb-lg">
+<div class="flex items-center gap-xs mb-base">
+<span class="material-symbols-outlined text-primary" data-icon="insights">insights</span>
+<span class="font-headline-md text-headline-md text-primary-container">Intelligence</span>
+</div>
+<p class="font-data-sm text-data-sm text-on-surface-variant opacity-70">Career Engine Active</p>
+</div>
+<nav class="flex flex-col gap-base">
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-variant/50 hover:translate-x-1 transition-transform duration-200 font-data-sm text-data-sm" href="#">
+<span class="material-symbols-outlined" data-icon="insights">insights</span> Intelligence
+            </a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-variant/50 hover:translate-x-1 transition-transform duration-200 font-data-sm text-data-sm" href="#">
+<span class="material-symbols-outlined" data-icon="account_tree">account_tree</span> Skill Graph
+            </a>
+<a class="flex items-center gap-md px-md py-sm bg-primary-container/20 text-primary border-r-4 border-primary transition-transform duration-200 font-data-sm text-data-sm" href="#">
+<span class="material-symbols-outlined" data-icon="star_half">star_half</span> Matches
+            </a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-variant/50 hover:translate-x-1 transition-transform duration-200 font-data-sm text-data-sm" href="#">
+<span class="material-symbols-outlined" data-icon="auto_awesome">auto_awesome</span> Outreach
+            </a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-variant/50 hover:translate-x-1 transition-transform duration-200 font-data-sm text-data-sm" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span> Settings
+            </a>
+</nav>
+<div class="mt-auto px-md pb-md">
+<button class="w-full bg-primary-container text-on-primary-container py-sm rounded-lg font-data-sm text-data-sm font-bold glow-pulse transition-all">Analyze Profile</button>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="md:pl-[280px] pt-32 pb-xl px-margin-mobile md:px-margin-desktop min-h-screen">
+<div class="max-w-[1200px] mx-auto">
+<!-- Hero Breadcrumb & Action -->
+<div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-md mb-xl">
+<div>
+<div class="flex items-center gap-xs text-on-surface-variant mb-xs">
+<span class="font-data-sm text-data-sm">OPPORTUNITIES</span>
+<span class="material-symbols-outlined text-[12px]" data-icon="chevron_right">chevron_right</span>
+<span class="font-data-sm text-data-sm text-primary">NEURAL DYNAMICS INC.</span>
+</div>
+<h1 class="font-headline-lg text-headline-lg md:text-[40px] leading-tight text-white mb-xs">Senior Neural Architect</h1>
+<div class="flex flex-wrap gap-xs">
+<span class="bg-secondary-container/30 text-secondary text-[12px] px-sm py-1 rounded-full border border-secondary/20">Full-Time</span>
+<span class="bg-tertiary-container/10 text-tertiary text-[12px] px-sm py-1 rounded-full border border-tertiary/20">Remote / Hybrid</span>
+<span class="bg-surface-variant/50 text-on-surface-variant text-[12px] px-sm py-1 rounded-full border border-outline-variant/10">$180k - $240k</span>
+</div>
+</div>
+<div class="flex gap-sm w-full md:w-auto">
+<button class="flex-1 md:flex-none flex items-center justify-center gap-xs px-lg py-md rounded-xl glass-panel text-on-surface hover:bg-surface-bright transition-all border border-outline-variant/30 font-data-lg text-data-lg">
+<span class="material-symbols-outlined" data-icon="bookmark">bookmark</span>
+                        Save
+                    </button>
+<button class="flex-1 md:flex-none flex items-center justify-center gap-xs px-lg py-md rounded-xl bg-primary-container text-on-primary-container hover:shadow-[0_0_30px_rgba(56,189,248,0.4)] transition-all font-data-lg text-data-lg font-bold">
+<span class="material-symbols-outlined" data-icon="auto_awesome">auto_awesome</span>
+                        Generate Outreach
+                    </button>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-md items-start">
+<!-- Left Column: Overview & AI Insights -->
+<div class="lg:col-span-8 space-y-md">
+<!-- Role Overview Card -->
+<div class="glass-panel p-lg rounded-xl overflow-hidden relative">
+<div class="absolute top-0 right-0 w-64 h-64 bg-primary/5 blur-[100px] pointer-events-none"></div>
+<h2 class="font-headline-md text-headline-md text-white mb-md flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary" data-icon="subject">subject</span>
+                            Mission Brief
+                        </h2>
+<div class="space-y-sm text-on-surface-variant leading-relaxed">
+<p class="font-body-lg text-body-lg text-on-surface">Neural Dynamics is seeking a visionary architect to bridge the gap between large language models and real-time robotic control systems.</p>
+<p class="font-body-md text-body-md">You will lead the development of our "Synapse-V4" engine, optimizing inference latency for sub-millisecond edge processing. This role requires a unique synthesis of deep learning mastery and low-level C++ performance engineering.</p>
+<ul class="grid grid-cols-1 md:grid-cols-2 gap-sm pt-sm">
+<li class="flex items-start gap-xs">
+<span class="material-symbols-outlined text-primary text-[20px]" data-icon="check_circle">check_circle</span>
+<span class="text-body-sm">Scale distributed training clusters across 10k+ H100 nodes.</span>
+</li>
+<li class="flex items-start gap-xs">
+<span class="material-symbols-outlined text-primary text-[20px]" data-icon="check_circle">check_circle</span>
+<span class="text-body-sm">Lead a cross-functional team of 8 neural engineers.</span>
+</li>
+<li class="flex items-start gap-xs">
+<span class="material-symbols-outlined text-primary text-[20px]" data-icon="check_circle">check_circle</span>
+<span class="text-body-sm">Own the hardware-software co-design strategy.</span>
+</li>
+<li class="flex items-start gap-xs">
+<span class="material-symbols-outlined text-primary text-[20px]" data-icon="check_circle">check_circle</span>
+<span class="text-body-sm">Pioneer new transformer architectures for robotics.</span>
+</li>
+</ul>
+</div>
+</div>
+<!-- AI Insights Bento -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-md">
+<!-- Company Culture -->
+<div class="glass-panel p-lg rounded-xl border-l-4 border-tertiary">
+<h3 class="font-headline-md text-headline-md text-tertiary mb-sm flex items-center gap-sm">
+<span class="material-symbols-outlined" data-icon="diversity_3">diversity_3</span>
+                                Neural Culture
+                            </h3>
+<p class="text-body-sm text-on-surface-variant mb-md italic">"High autonomy, extreme technical rigor, and a 'first principles' approach to every engineering challenge."</p>
+<div class="flex flex-wrap gap-xs">
+<span class="bg-tertiary/10 text-tertiary px-xs py-1 rounded text-[10px] uppercase font-bold tracking-widest border border-tertiary/20">Async First</span>
+<span class="bg-tertiary/10 text-tertiary px-xs py-1 rounded text-[10px] uppercase font-bold tracking-widest border border-tertiary/20">Hard Engineering</span>
+<span class="bg-tertiary/10 text-tertiary px-xs py-1 rounded text-[10px] uppercase font-bold tracking-widest border border-tertiary/20">Meritocratic</span>
+</div>
+</div>
+<!-- Strategic AI Insight -->
+<div class="glass-panel p-lg rounded-xl border-l-4 border-primary">
+<h3 class="font-headline-md text-headline-md text-primary mb-sm flex items-center gap-sm">
+<span class="material-symbols-outlined" data-icon="psychology">psychology</span>
+                                Strategic Edge
+                            </h3>
+<p class="text-body-sm text-on-surface-variant mb-md">Our intelligence suggests this role is pivotal for their upcoming Series D. Your background in CUDA kernels is a high-priority "hidden" requirement.</p>
+<div class="flex items-center gap-sm">
+<div class="h-1 flex-1 bg-surface-variant rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[88%] shadow-[0_0_10px_#8ed5ff]"></div>
+</div>
+<span class="font-data-sm text-data-sm text-primary">88% IMPACT</span>
+</div>
+</div>
+</div>
+<!-- Team Chemistry Visualization -->
+<div class="glass-panel p-lg rounded-xl">
+<div class="flex justify-between items-center mb-lg">
+<h3 class="font-headline-md text-headline-md text-white flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary" data-icon="hub">hub</span>
+                                Team Chemistry
+                            </h3>
+<span class="font-data-sm text-data-sm text-on-surface-variant">4 CURRENT MEMBERS</span>
+</div>
+<div class="relative h-64 w-full flex items-center justify-center">
+<!-- Team Visualization (Abstract SVG Map) -->
+<svg class="w-full h-full max-w-lg" viewbox="0 0 400 200">
+<!-- Connection Lines -->
+<line stroke="#3e484f" stroke-width="1" x1="200" x2="120" y1="100" y2="50"></line>
+<line stroke="#3e484f" stroke-width="1" x1="200" x2="280" y1="100" y2="50"></line>
+<line stroke="#3e484f" stroke-width="1" x1="200" x2="120" y1="100" y2="150"></line>
+<line stroke="#3e484f" stroke-width="1" x1="200" x2="280" y1="100" y2="150"></line>
+<!-- User Node -->
+<circle class="animate-pulse" cx="200" cy="100" fill="#0b1326" r="40" stroke="#8ed5ff" stroke-width="2"></circle>
+<text fill="#8ed5ff" font-family="Space Grotesk" font-size="12" text-anchor="middle" x="200" y="105">YOU</text>
+<!-- Team Nodes -->
+<circle cx="120" cy="50" fill="#171f33" r="25" stroke="#45e3ce" stroke-width="1"></circle>
+<text fill="#45e3ce" font-family="Space Grotesk" font-size="8" text-anchor="middle" x="120" y="54">CTO</text>
+<circle cx="280" cy="50" fill="#171f33" r="25" stroke="#bdc2ff" stroke-width="1"></circle>
+<text fill="#bdc2ff" font-family="Space Grotesk" font-size="8" text-anchor="middle" x="280" y="54">ML Lead</text>
+<circle cx="120" cy="150" fill="#171f33" r="25" stroke="#87929a" stroke-width="1"></circle>
+<text fill="#87929a" font-family="Space Grotesk" font-size="8" text-anchor="middle" x="120" y="154">Systems</text>
+<circle cx="280" cy="150" fill="#171f33" r="25" stroke="#87929a" stroke-width="1"></circle>
+<text fill="#87929a" font-family="Space Grotesk" font-size="8" text-anchor="middle" x="280" y="154">Ops</text>
+</svg>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-md mt-lg">
+<div class="text-center">
+<p class="font-data-lg text-data-lg text-white">92%</p>
+<p class="font-data-sm text-data-sm text-on-surface-variant">Communication</p>
+</div>
+<div class="text-center">
+<p class="font-data-lg text-data-lg text-primary">85%</p>
+<p class="font-data-sm text-data-sm text-on-surface-variant">Tech Overlap</p>
+</div>
+<div class="text-center">
+<p class="font-data-lg text-data-lg text-white">High</p>
+<p class="font-data-sm text-data-sm text-on-surface-variant">Growth Synergy</p>
+</div>
+<div class="text-center">
+<p class="font-data-lg text-data-lg text-white">Low</p>
+<p class="font-data-sm text-data-sm text-on-surface-variant">Friction Risk</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: Match Score & Requirements -->
+<div class="lg:col-span-4 space-y-md">
+<!-- Match Score Card -->
+<div class="glass-panel p-lg rounded-xl flex flex-col items-center text-center">
+<h3 class="font-data-sm text-data-sm text-primary uppercase tracking-[0.2em] mb-lg">Career Match Score</h3>
+<div class="relative w-48 h-48 mb-md">
+<svg class="w-full h-full -rotate-90" viewbox="0 0 100 100">
+<circle cx="50" cy="50" fill="none" r="45" stroke="#171f33" stroke-width="8"></circle>
+<circle class="career-match-ring shadow-[0_0_15px_#8ed5ff]" cx="50" cy="50" fill="none" r="45" stroke="#8ed5ff" stroke-dasharray="282.7" stroke-dashoffset="28.27" stroke-linecap="round" stroke-width="8"></circle>
+</svg>
+<div class="absolute inset-0 flex flex-col items-center justify-center">
+<span class="font-display-lg text-[48px] text-white">94</span>
+<span class="font-data-sm text-data-sm text-primary">ELITE FIT</span>
+</div>
+</div>
+<p class="text-body-sm text-on-surface-variant mb-lg px-md">Your expertise in Neural-Symbolic Reasoning puts you in the top 2% of applicants for this role.</p>
+<div class="w-full space-y-sm">
+<div class="flex justify-between items-center text-body-sm">
+<span class="text-on-surface-variant">Skill Match</span>
+<span class="text-white">98%</span>
+</div>
+<div class="flex justify-between items-center text-body-sm">
+<span class="text-on-surface-variant">Experience Match</span>
+<span class="text-white">88%</span>
+</div>
+<div class="flex justify-between items-center text-body-sm">
+<span class="text-on-surface-variant">Company Affinity</span>
+<span class="text-white">95%</span>
+</div>
+</div>
+</div>
+<!-- Tech Stack Analysis -->
+<div class="glass-panel p-lg rounded-xl">
+<h3 class="font-headline-md text-headline-md text-white mb-md flex items-center gap-sm">
+<span class="material-symbols-outlined text-secondary" data-icon="terminal">terminal</span>
+                            Stack Analysis
+                        </h3>
+<div class="space-y-md">
+<div>
+<p class="font-data-sm text-data-sm text-on-surface-variant mb-xs uppercase">Core Proficiency</p>
+<div class="flex flex-wrap gap-xs">
+<span class="bg-secondary-container/20 text-secondary-fixed text-[11px] px-sm py-1 rounded-lg border border-secondary-container">PyTorch</span>
+<span class="bg-secondary-container/20 text-secondary-fixed text-[11px] px-sm py-1 rounded-lg border border-secondary-container">CUDA</span>
+<span class="bg-secondary-container/20 text-secondary-fixed text-[11px] px-sm py-1 rounded-lg border border-secondary-container">Triton</span>
+<span class="bg-secondary-container/20 text-secondary-fixed text-[11px] px-sm py-1 rounded-lg border border-secondary-container">JAX</span>
+</div>
+</div>
+<div>
+<p class="font-data-sm text-data-sm text-on-surface-variant mb-xs uppercase">Skill Gap (AI Suggested)</p>
+<div class="flex flex-wrap gap-xs">
+<span class="bg-error/10 text-error text-[11px] px-sm py-1 rounded-lg border border-error/20">FPGA Optimization</span>
+<span class="bg-surface-variant text-on-surface-variant text-[11px] px-sm py-1 rounded-lg border border-outline-variant/30">Rust (Intermediate)</span>
+</div>
+<p class="text-[10px] text-outline mt-sm leading-tight">AI Note: Mentioning your High-Performance Computing minor will mitigate the FPGA gap.</p>
+</div>
+</div>
+</div>
+<!-- Visual Context Image -->
+<div class="relative group h-48 rounded-xl overflow-hidden border border-outline-variant/20 shadow-xl">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" data-alt="A futuristic laboratory setting with high-tech robotic arms being calibrated by glowing blue holographic displays. The environment is sleek and dark, illuminated by neon cyan accents and subtle violet lens flares. The scene evokes a mood of cutting-edge scientific discovery and elite engineering excellence within a minimalist, obsidian-finished workspace." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAzPdRSBIKH0hO6wOAPjKgpYtLnAQpMnde7f56Z4dftcHI2Lf4r3SgpnpDk_K_HYCMAhwCTLXxAOdU_QkkZtueIRUXqvKBhd8SmqFncVjvKwnmCRIfrkhzfXZZ-Uw9IzrRHDMjMASTERBtzUyog3EG7TmFVhq3nynRYMdCFkOPpOGzTEFKALsRL7YE_eLtEDZKOsIa8FtCZfDwOs0yJO0FFgbKfWXaAb3GvrQy0C4hqGbVnUvGALCdkHXCgDZk8dvE0xcOdb8fe"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface to-transparent opacity-60"></div>
+<div class="absolute bottom-4 left-4">
+<p class="font-headline-md text-white">Neural Dynamics HQ</p>
+<p class="font-data-sm text-primary">San Francisco / Tokyo</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="relative bottom-0 w-full bg-surface-container-lowest border-t border-outline-variant/20 md:pl-[280px]">
+<div class="flex flex-col md:flex-row justify-between items-center px-margin-desktop py-xl w-full max-w-[1440px] mx-auto gap-md">
+<div class="flex flex-col items-center md:items-start gap-xs">
+<span class="font-display-lg text-display-lg text-primary">InRoad</span>
+<p class="font-data-sm text-data-sm text-outline">© 2024 InRoad AI. Career Intelligence Engineered.</p>
+</div>
+<div class="flex gap-lg flex-wrap justify-center">
+<a class="text-outline hover:text-primary-container transition-colors font-data-sm text-data-sm" href="#">Privacy Protocol</a>
+<a class="text-outline hover:text-primary-container transition-colors font-data-sm text-data-sm" href="#">Neural Terms</a>
+<a class="text-outline hover:text-primary-container transition-colors font-data-sm text-data-sm" href="#">System Status</a>
+<a class="text-outline hover:text-primary-container transition-colors font-data-sm text-data-sm" href="#">API</a>
+</div>
+</div>
+</footer>
+<!-- FAB (Suppressed on Details Page per logic, but we can include a tiny 'Back' FAB if needed. The prompt says 'Include CTA outreach' which we put in header area, but logic suggests FAB only on Home/Dashboard. Skipping global FAB here per rules.) -->
+<script>
+        // Micro-interaction for match ring
+        document.addEventListener('DOMContentLoaded', () => {
+            const rings = document.querySelectorAll('.career-match-ring');
+            rings.forEach(ring => {
+                // Trigger animation reset
+                const originalOffset = ring.style.strokeDashoffset;
+                ring.style.strokeDashoffset = '282.7';
+                setTimeout(() => {
+                    ring.style.strokeDashoffset = '28.27';
+                }, 100);
+            });
+        });
+
+        // Click glow effect
+        document.addEventListener('click', (e) => {
+            if (e.target.closest('.glow-pulse')) {
+                const btn = e.target.closest('.glow-pulse');
+                btn.style.boxShadow = '0 0 30px rgba(123, 208, 255, 0.6)';
+                setTimeout(() => {
+                    btn.style.boxShadow = '';
+                }, 300);
+            }
+        });
+    </script>
+</body></html>

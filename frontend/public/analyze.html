@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+
+<head>
+
+  <meta charset="utf-8"/>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <title>InRoad | Analyze Profile</title>
+
+  <link rel="manifest" href="/manifest.json"/>
+
+  <meta name="theme-color" content="#38bdf8"/>
+
+  <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600&family=Geist:wght@500;600;700&display=swap" rel="stylesheet"/>
+
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+
+  <script>
+
+    tailwind.config = {
+
+      darkMode: "class",
+
+      theme: {
+
+        extend: {
+
+          colors: {
+
+            surface: "#0b1326",
+
+            background: "#0b1326",
+
+            "on-surface": "#dae2fd",
+
+            "on-surface-variant": "#bdc8d1",
+
+            primary: "#8ed5ff",
+
+            "primary-container": "#38bdf8",
+
+            "on-primary-container": "#004965",
+
+            "outline-variant": "#3e484f",
+
+            "surface-container": "#171f33",
+
+            "surface-container-high": "#222a3d",
+
+            error: "#ffb4ab",
+
+          },
+
+        },
+
+      },
+
+    };
+
+  </script>
+
+  <style>
+
+    body { background: #0b1326; color: #dae2fd; }
+
+    .glass-card {
+
+      background: rgba(30, 41, 59, 0.5);
+
+      backdrop-filter: blur(12px);
+
+      border: 1px solid rgba(255, 255, 255, 0.1);
+
+    }
+
+  </style>
+
+</head>
+
+<body class="min-h-screen font-sans antialiased">
+
+  <header class="border-b border-outline-variant/20 bg-surface/50 backdrop-blur-xl">
+
+    <div class="max-w-3xl mx-auto px-6 h-16 flex items-center justify-between">
+
+      <a href="/index.html" class="text-2xl font-bold text-primary tracking-tight">InRoad</a>
+
+      <div class="flex items-center gap-4">
+
+        <a data-inroad-nav="profile" href="/profile.html" class="text-sm text-on-surface-variant hover:text-primary">Profile</a>
+
+        <a data-inroad-nav="dashboard" href="/dashboard.html" class="text-sm text-on-surface-variant hover:text-primary">Dashboard</a>
+
+        <div data-auth-nav class="flex items-center gap-3"></div>
+
+      </div>
+
+    </div>
+
+  </header>
+
+
+
+  <main class="max-w-3xl mx-auto px-6 py-12">
+
+    <div class="mb-8">
+
+      <p class="text-primary text-xs uppercase tracking-widest font-semibold mb-2">Neural Profile Sync</p>
+
+      <h1 class="text-3xl font-bold text-on-surface mb-2">Upload &amp; analyze your resume</h1>
+
+      <p class="text-on-surface-variant">
+
+        Upload a PDF, DOCX, or TXT file. We extract skills, experience, and internships — then you can edit before running the full match pipeline.
+
+      </p>
+
+    </div>
+
+
+
+    <form id="analyze-form" class="glass-card rounded-xl p-8 space-y-6">
+
+      <div>
+
+        <label class="block text-xs uppercase tracking-wider text-on-surface-variant mb-2" for="resume_file">Resume file</label>
+
+        <input
+
+          id="resume_file"
+
+          name="resume_file"
+
+          type="file"
+
+          accept=".pdf,.docx,.txt,.md"
+
+          class="w-full text-sm file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-primary-container file:text-on-primary-container"
+
+        />
+
+        <p class="text-xs text-on-surface-variant/70 mt-2">Or paste resume text below if you prefer.</p>
+
+      </div>
+
+
+
+      <div>
+
+        <label class="block text-xs uppercase tracking-wider text-on-surface-variant mb-2" for="resume_text">Resume / CV text</label>
+
+        <textarea
+
+          id="resume_text"
+
+          name="resume_text"
+
+          rows="6"
+
+          class="w-full bg-surface-container-high/50 border border-outline-variant/40 rounded-lg p-4 text-sm focus:border-primary-container focus:ring-1 focus:ring-primary-container outline-none"
+
+          placeholder="Text will be filled after upload, or paste here..."
+
+        ></textarea>
+
+      </div>
+
+
+
+      <div id="extracted-preview" class="hidden space-y-4 border-t border-outline-variant/30 pt-6">
+
+        <h2 class="text-sm font-semibold text-primary uppercase tracking-wider">Extracted from resume</h2>
+
+        <div>
+
+          <label class="text-xs text-on-surface-variant">Skills (comma-separated)</label>
+
+          <input id="skills_input" type="text" class="w-full mt-1 bg-surface-container-high/50 border border-outline-variant/40 rounded-lg p-3 text-sm"/>
+
+        </div>
+
+        <div>
+
+          <p class="text-xs text-on-surface-variant mb-2">Experience</p>
+
+          <div id="experiences-preview" class="space-y-2 text-sm text-on-surface-variant"></div>
+
+        </div>
+
+        <div>
+
+          <p class="text-xs text-on-surface-variant mb-2">Internships</p>
+
+          <div id="internships-preview" class="space-y-2 text-sm text-on-surface-variant"></div>
+
+        </div>
+
+        <div>
+          <p class="text-xs text-on-surface-variant mb-2">Projects</p>
+          <div id="projects-preview" class="space-y-2 text-sm text-on-surface-variant"></div>
+        </div>
+
+        <a href="/profile.html" class="text-sm text-primary hover:underline">Edit all sections in Profile →</a>
+
+      </div>
+
+
+
+      <div>
+
+        <label class="block text-xs uppercase tracking-wider text-on-surface-variant mb-2" for="project_descriptions">Additional projects (optional)</label>
+
+        <textarea
+
+          id="project_descriptions"
+
+          name="project_descriptions"
+
+          rows="4"
+
+          class="w-full bg-surface-container-high/50 border border-outline-variant/40 rounded-lg p-4 text-sm focus:border-primary-container focus:ring-1 focus:ring-primary-container outline-none"
+
+          placeholder="- Side projects, hackathons, open source..."
+
+        ></textarea>
+
+      </div>
+
+
+
+      <p id="analyze-status" class="text-body-sm text-on-surface-variant" role="status"></p>
+
+      <button
+
+        id="analyze-submit"
+
+        type="submit"
+
+        class="w-full py-4 bg-primary-container text-on-primary-container font-bold rounded-lg hover:brightness-110 transition-all shadow-[0_0_20px_rgba(56,189,248,0.3)]"
+
+      >
+
+        Run Analysis
+
+      </button>
+
+    </form>
+
+
+
+    <p class="text-center text-xs text-on-surface-variant/60 mt-8">
+
+      <a href="/login.html" class="text-primary hover:underline">Sign in</a> to save your profile to the cloud.
+
+    </p>
+
+  </main>
+
+
+
+  <script src="https://www.gstatic.com/firebasejs/10.14.0/firebase-app-compat.js"></script>
+
+  <script src="https://www.gstatic.com/firebasejs/10.14.0/firebase-auth-compat.js"></script>
+
+  <script src="/js/config.js"></script>
+
+  <script src="/js/store.js"></script>
+
+  <script src="/js/auth.js"></script>
+
+  <script src="/js/api.js"></script>
+
+  <script src="/js/utils.js"></script>
+
+  <script src="/js/nav.js"></script>
+
+  <script src="/js/pages/auth-shared.js"></script>
+
+  <script src="/js/pages/analyze.js"></script>
+
+</body>
+
+</html>
+

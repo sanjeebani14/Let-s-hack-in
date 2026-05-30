@@ -1,0 +1,21 @@
+{
+  "name": "InRoad AI - Career Intelligence",
+  "short_name": "InRoad",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0b1326",
+  "theme_color": "#38bdf8",
+  "description": "Engineered for precision. Driven by neural insights. InRoad maps your trajectory through the hidden job market.",
+  "icons": [
+    {
+      "src": "/favicon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

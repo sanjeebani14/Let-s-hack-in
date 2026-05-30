@@ -1,8 +1,46 @@
 import re
-from typing import Dict, List, Any
+from typing import Any, Dict, List, Optional
+
+# Shared skill dictionary for resume_parser
+SKILL_KEYWORDS = {
+    "python": "Python",
+    "java": "Java",
+    "javascript": "JavaScript",
+    "typescript": "TypeScript",
+    "flutter": "Flutter",
+    "react": "React",
+    "ai": "AI",
+    "machine learning": "Machine Learning",
+    "ml": "Machine Learning",
+    "deep learning": "Deep Learning",
+    "backend": "Backend Development",
+    "frontend": "Frontend Development",
+    "fullstack": "Full-stack Development",
+    "devops": "DevOps",
+    "cloud": "Cloud Technologies",
+    "docker": "Docker",
+    "kubernetes": "Kubernetes",
+    "sql": "SQL",
+    "postgresql": "PostgreSQL",
+    "mongodb": "MongoDB",
+    "aws": "AWS",
+    "gcp": "GCP",
+    "azure": "Azure",
+    "tensorflow": "TensorFlow",
+    "pytorch": "PyTorch",
+    "firebase": "Firebase",
+    "fastapi": "FastAPI",
+    "node": "Node.js",
+}
 
 
-def extract_candidate_profile(resume_text: str, project_descriptions: str) -> Dict[str, Any]:
+def extract_candidate_profile(
+    resume_text: str,
+    project_descriptions: str,
+    extra_skills: Optional[List[str]] = None,
+    experiences: Optional[List[Dict[str, str]]] = None,
+    internships: Optional[List[Dict[str, str]]] = None,
+) -> Dict[str, Any]:
     """
     Extract candidate profile from resume and project descriptions.
     
@@ -25,40 +63,17 @@ Projects:
 {project_descriptions}
 """
     
-    # Extract skills - look for common skill keywords
-    skill_keywords = {
-        "python": "Python",
-        "java": "Java",
-        "javascript": "JavaScript",
-        "typescript": "TypeScript",
-        "flutter": "Flutter",
-        "react": "React",
-        "ai": "AI",
-        "machine learning": "Machine Learning",
-        "ml": "Machine Learning",
-        "deep learning": "Deep Learning",
-        "backend": "Backend Development",
-        "frontend": "Frontend Development",
-        "fullstack": "Full-stack Development",
-        "devops": "DevOps",
-        "cloud": "Cloud Technologies",
-        "docker": "Docker",
-        "kubernetes": "Kubernetes",
-        "sql": "SQL",
-        "postgresql": "PostgreSQL",
-        "mongodb": "MongoDB",
-        "aws": "AWS",
-        "gcp": "GCP",
-        "azure": "Azure",
-        "tensorflow": "TensorFlow",
-        "pytorch": "PyTorch",
-    }
-    
     text_lower = combined_text.lower()
-    found_skills = []
-    for keyword, skill_name in skill_keywords.items():
+    found_skills: List[str] = []
+    for keyword, skill_name in SKILL_KEYWORDS.items():
         if keyword in text_lower and skill_name not in found_skills:
             found_skills.append(skill_name)
+
+    if extra_skills:
+        for skill in extra_skills:
+            s = (skill or "").strip()
+            if s and s not in found_skills:
+                found_skills.append(s)
     
     # Default skills if none found
     if not found_skills:
@@ -173,14 +188,24 @@ Projects:
             seniority_level = level
             break
     
+    exp_list = experiences or []
+    intern_list = internships or []
+
     profile = {
-        "core_skills": found_skills[:6],  # Limit to 6
+        "core_skills": found_skills[:12],
         "ownership_signals": ownership_signals[:2],
         "measurable_outcomes": measurable_outcomes[:2],
         "problem_solving_patterns": problem_solving_patterns[:2],
         "domain_expertise": domain_expertise[:3],
         "seniority_level": seniority_level,
-        "semantic_summary": f"{seniority_level} with expertise in {', '.join(domain_expertise[:2])} and strong experience in {', '.join(found_skills[:3])}."
+        "semantic_summary": (
+            f"{seniority_level} with expertise in "
+            f"{', '.join(domain_expertise[:2])} and strong experience in "
+            f"{', '.join(found_skills[:3])}."
+        ),
+        "experiences": exp_list,
+        "internships": intern_list,
+        "skills": found_skills[:20],
     }
 
     return profile

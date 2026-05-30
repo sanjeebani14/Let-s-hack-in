@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>InRoad | My Profile</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Geist:wght@600;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined&display=swap" rel="stylesheet"/>
+  <style>body{background:#0b1326;color:#dae2fd}.glass-card{background:rgba(30,41,59,.5);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.1)}</style>
+</head>
+<body class="min-h-screen font-sans antialiased">
+  <header class="border-b border-white/10">
+    <div class="max-w-4xl mx-auto px-6 h-16 flex items-center justify-between">
+      <a href="/index.html" class="text-xl font-bold text-[#8ed5ff]">InRoad</a>
+      <div class="flex items-center gap-4">
+        <a href="/analyze.html" class="text-sm text-[#bdc8d1] hover:text-[#8ed5ff]">Analyze</a>
+        <a href="/dashboard.html" class="text-sm text-[#bdc8d1] hover:text-[#8ed5ff]">Dashboard</a>
+        <div data-auth-nav class="flex items-center gap-3"></div>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-4xl mx-auto px-6 py-10">
+    <h1 class="text-3xl font-bold mb-2">Your profile</h1>
+    <p class="text-[#bdc8d1] text-sm mb-8">Edit skills, experience, and internships extracted from your resume.</p>
+
+    <form id="profile-form" class="space-y-8">
+      <section class="glass-card rounded-xl p-6">
+        <h2 class="text-lg font-semibold mb-4 flex items-center gap-2">
+          <span class="material-symbols-outlined text-[#38bdf8]">psychology</span> Skills
+        </h2>
+        <div id="skills-list" class="space-y-2 mb-3"></div>
+        <div class="flex gap-2">
+          <input id="new-skill" type="text" placeholder="Add a skill" class="flex-1 bg-[#222a3d]/50 border border-white/20 rounded-lg p-2 text-sm"/>
+          <button type="button" id="add-skill" class="px-4 py-2 bg-[#38bdf8]/20 text-[#8ed5ff] rounded-lg text-sm">Add</button>
+        </div>
+      </section>
+
+      <section class="glass-card rounded-xl p-6">
+        <h2 class="text-lg font-semibold mb-4 flex items-center gap-2">
+          <span class="material-symbols-outlined text-[#38bdf8]">work</span> Experience
+        </h2>
+        <div id="experiences-list" class="space-y-4 mb-4"></div>
+        <button type="button" id="add-experience" class="text-sm text-[#8ed5ff] hover:underline">+ Add experience</button>
+      </section>
+
+      <section class="glass-card rounded-xl p-6">
+        <h2 class="text-lg font-semibold mb-4 flex items-center gap-2">
+          <span class="material-symbols-outlined text-[#38bdf8]">school</span> Internships
+        </h2>
+        <div id="internships-list" class="space-y-4 mb-4"></div>
+        <button type="button" id="add-internship" class="text-sm text-[#8ed5ff] hover:underline">+ Add internship</button>
+      </section>
+
+      <p id="profile-status" class="text-sm" role="status"></p>
+      <div class="flex gap-4">
+        <button type="submit" class="px-6 py-3 bg-[#38bdf8] text-[#004965] font-bold rounded-lg">Save profile</button>
+        <a href="/analyze.html" class="px-6 py-3 border border-white/20 rounded-lg text-sm inline-flex items-center">Run analysis</a>
+      </div>
+    </form>
+  </main>
+
+  <script src="https://www.gstatic.com/firebasejs/10.14.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.14.0/firebase-auth-compat.js"></script>
+  <script src="/js/config.js"></script>
+  <script src="/js/store.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/api.js"></script>
+  <script src="/js/pages/auth-shared.js"></script>
+  <script src="/js/pages/profile.js"></script>
+</body>
+</html>
